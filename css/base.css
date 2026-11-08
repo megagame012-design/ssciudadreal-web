@@ -45,3 +45,9 @@ svg.i{display:block;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;str
 
 /* Títulos con esencia cofrade */
 .serif{font-family:var(--serif);font-weight:600;letter-spacing:-.005em}
+
+/* App instalada (iOS 26): el sistema pinta un degradado translúcido detrás de la hora cuando el
+   contenido pasa por debajo. Una franja sólida del color de la página tapa esa zona y no hay fundido. */
+@media (display-mode: standalone), (display-mode: fullscreen){
+  body::before{content:"";position:fixed;z-index:9000;left:0;right:0;top:0;height:env(safe-area-inset-top,0px);background:var(--bg);pointer-events:none}
+}
