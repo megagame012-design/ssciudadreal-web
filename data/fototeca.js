@@ -23,7 +23,8 @@ const ALBUMES = [
     titulo: 'Triduo a Nuestra Señora de la Soledad',
     hermandad: 'Soledad',
     lugar: '',
-    fotos: []
+    portada: 1,
+    fotos: ['01.webp', '02.webp', '03.webp', '04.webp', '05.webp', '06.webp', '07.webp', '08.webp', '09.webp', '10.webp', '11.webp', '12.webp']
   },
   {
     id: '2026-09-15-dolores-ave-maria',
