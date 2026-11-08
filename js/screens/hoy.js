@@ -149,7 +149,6 @@ register('/hoy', 'hoy', () => {
   // Oración del día en las festividades (solo el día que toca; se repite cada año)
   const ORACIONES = {
     '12-08': ['Inmaculada Concepción', ['Bendita sea tu pureza y eternamente lo sea, pues todo un Dios se recrea en tan graciosa belleza.', 'A ti, celestial Princesa, Virgen sagrada María, yo te ofrezco en este día alma, vida y corazón. Mírame con compasión, no me dejes, Madre mía.']],
-    '12-24': ['Nochebuena', ['Señor Jesús, que esta noche quisiste nacer pobre en un portal de Belén, entra también en nuestras casas.', 'Que alrededor de nuestra mesa no falte la paz, y que recordemos con cariño a quienes ya no están y a quienes hoy pasan la noche solos.', 'Virgen María y San José, enseñadnos a recibirlo con un corazón sencillo.']],
     '12-25': ['Natividad del Señor', ['Hoy nos ha nacido un Salvador: el Mesías, el Señor.', 'Niño Dios, que te hiciste uno de nosotros, llena el mundo de tu paz y nuestras familias de tu alegría.', 'Que esta Navidad te reconozcamos en el que sufre, en el que está solo y en el que más nos necesita.']],
     '01-06': ['Epifanía del Señor', ['Señor, que guiaste a los Magos de Oriente con la luz de una estrella, guíanos también a nosotros hasta ti.', 'Como ellos, queremos ofrecerte lo mejor que tenemos: nuestra fe, nuestro trabajo y nuestro amor.', 'Que nunca dejemos de buscarte y que, al encontrarte, sepamos volver a casa por otro camino, el tuyo.']]
   };
@@ -161,7 +160,7 @@ register('/hoy', 'hoy', () => {
   const PORTADAS = [
     { desde:'2026-11-22', hasta:'2026-11-22', f:'img/portada-cristo-rey', alt:'Cristo Rey, con corona de espinas y potencias, túnica blanca y manto rojo', pos:'50% 35%', listo:true },
     { desde:'2026-11-27', hasta:'2026-11-27', f:'img/portada-milagrosa', alt:'Virgen de la Medalla Milagrosa en un retablo cerámico', pos:'50% 22%', listo:true },
-    { desde:'2026-12-01', hasta:'2026-12-31', f:'img/portada-esperanza', alt:'Nuestra Señora de la Esperanza', listo:false }
+    { desde:'2026-12-01', hasta:'2026-12-31', f:'img/portada-esperanza', alt:'Nuestra Señora de la Esperanza, con corona y ráfaga y tocado de encaje', pos:'50% 30%', listo:true }
   ];
   const por = PORTADAS.find(p => p.listo && TODAY >= p.desde && TODAY <= p.hasta) || { f:'img/portada', alt:'Dolorosa bajo palio, con corona y ráfaga, entre la candelería' };
 
