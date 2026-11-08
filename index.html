@@ -64,6 +64,33 @@ try{var p=JSON.parse(localStorage.getItem('sscr-prefs-v2')||'{}'),t=p.theme&&p.t
 </script>
 </head>
 <body>
+<!-- Pantalla de inicio: solo al abrir la app instalada (no al volver a ella ni tras actualizar).
+     Foto por mes; los meses sin foto propia usan la portada. Para probar en el navegador: ?inicio -->
+<style>
+#splash{position:fixed;inset:0;z-index:10000;overflow:hidden;background:#0A0908;transition:opacity 600ms ease,visibility 0s 600ms}
+#splash.out{opacity:0;visibility:hidden}
+#splash .sp-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:45% 30%;animation:sp-zoom 2.6s cubic-bezier(.2,.7,.2,1) both}
+#splash::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,8,.15) 0%,rgba(10,9,8,0) 35%,rgba(10,9,8,.55) 68%,rgba(10,9,8,.92) 100%)}
+#splash .sp-logo{position:absolute;z-index:1;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 9vh);width:min(78vw,360px);height:auto;transform:translateX(-50%);animation:sp-in 900ms 250ms cubic-bezier(.2,.7,.2,1) both;filter:drop-shadow(0 4px 18px rgba(0,0,0,.5))}
+@keyframes sp-zoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+@keyframes sp-in{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+@media (prefers-reduced-motion:reduce){#splash .sp-bg,#splash .sp-logo{animation:none}}
+</style>
+<script>
+(function(){try{
+  var app=(navigator.standalone||matchMedia('(display-mode: standalone)').matches)&&!sessionStorage.getItem('sscr-open')&&sessionStorage.getItem('sscr-updated')!=='1';
+  if(!app&&!/[?&]inicio\b/.test(location.search))return;
+  sessionStorage.setItem('sscr-open','1');
+  var FOTOS={11:['img/inicio/noviembre.jpg','44% 38%']};   // mes: [foto, encuadre (cara en el centro)]
+  var f=FOTOS[new Date().getMonth()+1]||['img/portada.jpg','50% 30%'];
+  var s=document.createElement('div');s.id='splash';s.setAttribute('aria-hidden','true');
+  s.innerHTML='<img class="sp-bg" src="/'+f[0]+'" style="object-position:'+f[1]+'" alt=""><img class="sp-logo" src="/img/inicio/logo.png" alt="">';
+  document.body.appendChild(s);
+  var t0=Date.now(),done=false,end=function(){if(done)return;done=true;s.classList.add('out');setTimeout(function(){s.remove();},700);};
+  window.addEventListener('load',function(){setTimeout(end,Math.max(0,1800-(Date.now()-t0)));});
+  setTimeout(end,4000);
+}catch(e){}})();
+</script>
 <div id="app">
   <main id="stage"></main>
   <nav id="tabbar" class="tabbar glass" aria-label="Pestañas"></nav>
