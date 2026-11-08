@@ -52,8 +52,10 @@ register('/ajustes', 'ajustes', () => {
       cell({ icon:['ig','pink'], title:'Instagram', sub:'@ss.ciudad_real', href: SITE.instagram, external:true }),
       cell({ icon:['share','green'], title:'Compartir la app', action:'share-app' })
     ])}
-    <p class="version">SS Ciudad Real · Versión 2.0</p>`;
+    <p class="version">SS Ciudad Real · <span data-ver>Versión 2.1</span></p>`;
   return screen({ title:'Ajustes', grouped:true, content, setup: s => {
+    // Versión real instalada (la del service worker), para saber si el móvil está al día
+    if (window.caches) caches.keys().then(ks => { const k = ks.find(x => /^sscr-v[\d.]+-core$/.test(x)); const v = $('[data-ver]', s.el); if (k && v) v.textContent = 'Versión ' + k.slice(6, -5); }).catch(() => {});
     wireSearch(s.el, q => $$('.section', s.scroller).forEach(sec => {
       let any = false; $$('.cell', sec).forEach(c => { const m = !q || norm(c.textContent).includes(q); c.hidden = !m; any = any || m; }); sec.hidden = !any;
     }));
