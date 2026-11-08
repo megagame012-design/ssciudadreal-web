@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<!-- Publicada: rutas desde la raíz. Abierta desde el disco: rutas relativas -->
+<script>if(location.protocol!=="file:")document.write('<base href="/">')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>SS Ciudad Real · Semana Santa de Ciudad Real</title>
+<meta name="description" content="La app de la Semana Santa de Ciudad Real: agenda cofrade, hermandades, fototeca y actualidad. La idea no es grabar, es sentir.">
+<link rel="canonical" href="https://ssciudadreal.es/">
+<meta name="theme-color" content="#0A0908">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SS Ciudad Real">
+<meta name="format-detection" content="telephone=no">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="SS Ciudad Real">
+<meta property="og:url" content="https://ssciudadreal.es/">
+<meta property="og:title" content="SS Ciudad Real · Semana Santa de Ciudad Real">
+<meta property="og:description" content="Agenda cofrade, hermandades, fototeca y actualidad de la Semana Santa de Ciudad Real.">
+<meta property="og:image" content="https://ssciudadreal.es/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ssciudadreal.es/img/og.jpg">
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<!-- Pantallas de arranque de iPhone (claro y oscuro) -->
+<link rel="apple-touch-startup-image" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="icons/splash-1320x2868-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)" href="icons/splash-1320x2868-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="icons/splash-1290x2796-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)" href="icons/splash-1290x2796-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="icons/splash-1206x2622-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)" href="icons/splash-1206x2622-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="icons/splash-1179x2556-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)" href="icons/splash-1179x2556-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="icons/splash-1170x2532-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)" href="icons/splash-1170x2532-light.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: dark)" href="icons/splash-1125x2436-dark.png">
+<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (prefers-color-scheme: light)" href="icons/splash-1125x2436-light.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin>
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/screens.css">
+<!-- Tema antes de pintar, para que no parpadee -->
+<script>
+try{var p=JSON.parse(localStorage.getItem('sscr-prefs-v2')||'{}'),t=p.theme&&p.theme!=='auto'?p.theme:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t;if(p.accent)document.documentElement.dataset.accent=p.accent;if(p.textScale)document.documentElement.style.setProperty('--ts',p.textScale);}catch(e){}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"SS Ciudad Real","url":"https://ssciudadreal.es/","logo":"https://ssciudadreal.es/icons/icon-512.png","description":"Proyecto de difusión audiovisual de la Semana Santa de Ciudad Real, Fiesta de Interés Turístico Nacional.","foundingDate":"2024-06","sameAs":["https://www.instagram.com/ss.ciudad_real"]}
+</script>
+</head>
+<body>
+<div id="app">
+  <main id="stage"></main>
+  <nav id="tabbar" class="tabbar glass" aria-label="Pestañas"></nav>
+</div>
+<noscript><p style="padding:24px;font-family:-apple-system,system-ui,sans-serif">SS Ciudad Real necesita JavaScript para funcionar.</p></noscript>
+<script src="data/data.js"></script>
+<script src="data/mapas.js"></script>
+<script src="data/fototeca.js"></script>
+<script src="js/app.bundle.js"></script>
+</body>
+</html>

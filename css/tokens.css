@@ -1,0 +1,119 @@
+/* =====================================================================
+   SS Ciudad Real · Tokens
+   Color (claro y oscuro), acento, tipografía de Apple, espacio, radios,
+   materiales de cristal y movimiento. Ningún color fuera de este archivo.
+   ===================================================================== */
+
+:root{
+  /* Tipografía del sistema de Apple (SF Pro en iPhone, iPad y Mac) */
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-rounded: ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  /* Esencia cofrade: títulos en Cormorant Garamond (en redonda, nunca cursiva) */
+  --serif: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
+  --ts: 1; /* Tamaño del texto (Ajustes) */
+
+  /* Escala de iOS (Dynamic Type, tamaño grande) */
+  --t-large: calc(34px * var(--ts)); --t-title1: calc(28px * var(--ts)); --t-title2: calc(22px * var(--ts)); --t-title3: calc(20px * var(--ts));
+  --t-headline: calc(17px * var(--ts)); --t-body: calc(17px * var(--ts)); --t-callout: calc(16px * var(--ts)); --t-subhead: calc(15px * var(--ts));
+  --t-footnote: calc(13px * var(--ts)); --t-caption: calc(12px * var(--ts)); --t-caption2: calc(11px * var(--ts));
+
+  /* Espacio y forma */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+  --margin: 16px;            /* margen lateral de iOS en iPhone */
+  --r-cell: 12px;            /* grupo de lista */
+  --r-card: 22px;            /* tarjetas de Hoy */
+  --r-sheet: 14px;           /* esquinas de hoja en escritorio */
+  --r-sheet-top: 32px;       /* esquinas superiores de hoja en iPhone */
+  --r-pill: 999px;
+  --hairline: .5px;
+
+  /* Medidas de la app */
+  --nav-h: 44px; --tab-h: 62px;
+  --safe-t: env(safe-area-inset-top, 0px); --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px); --safe-r: env(safe-area-inset-right, 0px);
+
+  /* Movimiento: muelles precalculados (response ≈ .45 s, amortiguación ≈ .86) */
+  --spring: linear(0, 0.0164, 0.0596, 0.1203, 0.1914, 0.2675, 0.3448, 0.4205, 0.4926, 0.5596, 0.6208, 0.6758, 0.7244, 0.7669, 0.8036, 0.8349, 0.8613, 0.8833, 0.9015, 0.9165, 0.9287, 0.9387, 0.9469, 0.9536, 0.9592, 0.9639, 0.9679, 0.9714, 0.9745, 0.9774, 0.9801, 0.9826, 0.985, 0.9873, 0.9894, 0.9914, 0.9932, 0.9948, 0.9963, 0.9975, 0.9985, 0.9993, 1);
+  --spring-d: 480ms;
+  --ease-out: cubic-bezier(.23,1,.32,1);
+  --press: 90ms;
+
+  /* Tipos de acto (colores de sistema de iOS), oscuro por defecto */
+  --t-procesion: #E6C04D; --t-traslado: #0A84FF; --t-culto: #BF5AF2; --t-besamanos: #FF6961; --t-concierto: #FFD60A;
+}
+
+/* ---------- Oscuro (Fotos sobre OLED) ---------- */
+:root, :root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg: #0A0908;                 /* negro cálido (esencia de la primera versión) */
+  --bg-grouped: #0A0908;
+  --cell: #171412;               /* celdas y tarjetas, cálidas */
+  --cell-2: #221E1A;
+  --cell-3: #2E2924;
+  --cell-press: #2A2520;
+  --label: #F6F2EA;              /* blanco hueso */
+  --label-2: rgba(240,232,218,.62);
+  --label-3: rgba(240,232,218,.30);
+  --label-4: rgba(240,232,218,.16);
+  --sep: rgba(212,175,55,.16);   /* separadores con un hilo dorado */
+  --fill: rgba(150,138,118,.30);
+  --fill-2: rgba(150,138,118,.18);
+  --scrim: rgba(0,0,0,.48);
+  --img-veil: rgba(0,0,0,.0);
+  /* Cristal */
+  --glass-tint: rgba(24,20,17,.5);
+  --glass-tint-strong: rgba(14,12,10,.78);
+  --glass-edge: rgba(255,255,255,.16);
+  --glass-edge-bottom: rgba(255,255,255,.04);
+  --glass-spec: rgba(255,255,255,.10);
+  --glass-shadow: 0 10px 34px rgba(0,0,0,.42), 0 2px 8px rgba(0,0,0,.28);
+  --glass-solid: #171412;
+  --shadow-card: 0 10px 30px rgba(0,0,0,.55);
+  --skeleton: #171412; --skeleton-hi: #221E1A;
+  --gold-line: rgba(212,175,55,.34);
+  /* Acento (dorado por defecto) */
+  --accent: #D4AF37; --on-accent: #000000; --accent-soft: rgba(212,175,55,.16);
+}
+
+/* ---------- Claro (pergamino cálido) ---------- */
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg: #FBFAF7;
+  --bg-grouped: #F4F1EA;
+  --cell: #FFFFFF;
+  --cell-2: #F4F1EA;
+  --cell-3: #E9E4D9;
+  --cell-press: #E9E4D9;
+  --label: #1C1A17;
+  --label-2: rgba(60,55,45,.74);
+  --label-3: rgba(60,55,45,.34);
+  --label-4: rgba(60,55,45,.18);
+  --sep: rgba(60,55,45,.20);
+  --fill: rgba(118,110,95,.16);
+  --fill-2: rgba(118,110,95,.10);
+  --scrim: rgba(28,26,23,.32);
+  --glass-tint: rgba(255,253,248,.56);
+  --glass-tint-strong: rgba(255,253,248,.84);
+  --glass-edge: rgba(255,255,255,.85);
+  --glass-edge-bottom: rgba(60,55,45,.08);
+  --glass-spec: rgba(255,255,255,.55);
+  --glass-shadow: 0 10px 30px rgba(60,48,20,.14), 0 2px 6px rgba(60,48,20,.08);
+  --glass-solid: #FFFFFF;
+  --shadow-card: 0 8px 26px rgba(60,48,20,.14);
+  --skeleton: #EFEBE2; --skeleton-hi: #F8F5EF;
+  --gold-line: rgba(125,98,16,.28);
+  --t-procesion: #9A7612; --t-traslado: #0060DF; --t-culto: #8E3CC9; --t-besamanos: #C9302C; --t-concierto: #9C7A00;
+  --accent: #7D6210; --on-accent: #FFFFFF; --accent-soft: rgba(125,98,16,.12);
+}
+
+/* ---------- Color de acento (Ajustes) ---------- */
+:root[data-accent="morado"]{ --accent: #A97BD3; --on-accent: #000; --accent-soft: rgba(169,123,211,.18); }
+:root[data-accent="granate"]{ --accent: #E0707C; --on-accent: #000; --accent-soft: rgba(224,112,124,.18); }
+:root[data-accent="negro"]{ --accent: #FFFFFF; --on-accent: #000; --accent-soft: rgba(255,255,255,.14); }
+:root[data-theme="light"][data-accent="morado"]{ --accent: #5E2A7E; --on-accent: #FFF; --accent-soft: rgba(94,42,126,.12); }
+:root[data-theme="light"][data-accent="granate"]{ --accent: #7A1F2B; --on-accent: #FFF; --accent-soft: rgba(122,31,43,.12); }
+:root[data-theme="light"][data-accent="negro"]{ --accent: #1C1A17; --on-accent: #FFF; --accent-soft: rgba(28,26,23,.10); }
+
+/* ---------- Reducir transparencia: cristal opaco equivalente ---------- */
+:root[data-transparency="reduce"]{ --glass-tint: var(--glass-solid); --glass-tint-strong: var(--glass-solid); --glass-spec: transparent; }
+@media (prefers-reduced-transparency: reduce){ :root:not([data-transparency="allow"]){ --glass-tint: var(--glass-solid); --glass-tint-strong: var(--glass-solid); --glass-spec: transparent; } }
