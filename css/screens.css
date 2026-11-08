@@ -777,6 +777,8 @@ svg.inline{display:inline-block;vertical-align:-3px}
 .ag-none{display:flex;align-items:center;gap:8px;margin:2px var(--margin) 12px;padding:14px 16px;border-radius:14px;background:var(--cell);font-size:var(--t-subhead);color:var(--label-2)}
 .ev-hero-credit{position:absolute;z-index:3;right:12px;bottom:12px;padding:3px 8px;border-radius:var(--r-pill);background:rgba(10,9,8,.5);color:rgba(246,242,234,.85);font-size:11px;font-weight:500}
 /* Festividades: tarjeta pequeña */
+.ag-cards-past{padding-bottom:4px}
+.ag-cards-past + .ag-cards{padding-top:8px}
 .ag-mini{flex-direction:row;align-items:center;gap:14px;padding:12px 14px 12px 12px;border-radius:20px;box-shadow:inset 0 0 0 .5px var(--sep),0 8px 22px rgba(0,0,0,.2);align-self:start}
 .agm-media{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:14px;overflow:hidden;color:color-mix(in srgb,var(--c) 75%,#fff);background:radial-gradient(90% 90% at 70% 0%,color-mix(in srgb,var(--c) 35%,transparent),transparent 75%),linear-gradient(160deg,#241c10,#0d0b08)}
 .agm-media img{width:100%;height:100%;object-fit:cover}

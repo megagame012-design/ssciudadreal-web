@@ -2060,14 +2060,16 @@ function monthCards(month){
   const seen = new Set(), list = [];
   ALL_DATES.filter(d => d.startsWith(month)).forEach(d => evs(d).forEach(e => { if (!seen.has(e.id)) { seen.add(e.id); list.push({ e, d }); } }));
   if (!list.length) return `<p class="ag-none">${icon('candle', 18)} Sin cultos publicados este mes</p>`;
-  return `<div class="ag-cards">${list.map(({ e, d }) => {
+  const cards = list.map(({ e, d }) => {
     const t = evTypesOn(e, d)[0] || e.type, pic = evPic(e), dt = parseISO(d), ds = evDates(e).filter(x => x.startsWith(month));
-    const last = ds[ds.length - 1], past = last < TODAY, n = Math.round((parseISO(d) - parseISO(TODAY)) / 864e5);
+    const last = ds[ds.length - 1], past = last < TODAY || (last === TODAY && e.doneAt && Date.now() >= Date.parse(e.doneAt)), n = Math.round((parseISO(d) - parseISO(TODAY)) / 864e5);
     const when = past ? 'Celebrado' : (ds.includes(TODAY) ? 'Hoy' : n === 1 ? 'Mañana' : n > 1 ? `En ${n} días` : 'En curso');
     const herm = String(e.hermandad || '').replace(/,.*$/, '');
     // Festividades: tarjeta pequeña, con su icono (o una miniatura si lleva foto)
-    if (e.quiet) return `<button type="button" class="ag-card ag-mini${past ? ' past' : ''}" data-ev="${e.id}" data-iso="${d}" data-days="${ds.join(' ')}" style="--c:${typeOf(t).color}">
-      <span class="agm-media${e.thumb || e.image ? ' ph' : ''}">${e.thumb || e.image ? img(e.thumb || e.image, 200, { pos: e.thumb ? '50% 50%' : (e.imagePos || '50% 20%') }) : icon(e.icon || 'sparkle', 30)}</span>
+    // Actos ya celebrados y festividades: tarjeta pequeña (Cristo Rey y la Milagrosa, «big», van en grande)
+    const mpic = e.thumb || (e.quiet ? e.image : pic);
+    if ((e.quiet && !e.big) || past) return `<button type="button" class="ag-card ag-mini${past ? ' past' : ''}" data-ev="${e.id}" data-iso="${d}" data-days="${ds.join(' ')}" style="--c:${typeOf(t).color}">
+      <span class="agm-media${mpic ? ' ph' : ''}">${mpic ? img(mpic, 200, { pos: e.thumb ? '50% 50%' : (e.imagePos || '50% 20%') }) : icon(e.icon || 'sparkle', 30)}</span>
       <span class="agm-body"><span class="agm-date">${WEEKDAYS_S[dt.getDay()]} ${dt.getDate()} ${MONTHS[dt.getMonth()].slice(0, 3)}<span class="agm-when${past ? ' is-past' : ''}">${when}</span></span>
         <span class="agm-title">${esc(e.title)}</span>
         ${e.sub || herm ? `<span class="agm-sub">${esc(e.sub || herm)}</span>` : ''}</span>
@@ -2083,7 +2085,10 @@ function monthCards(month){
         ${ds.length > 1 ? `<span class="agc-days">${ds.map(x => `<span class="${x < TODAY ? 'done' : ''}"><i>${WEEKDAYS_S[parseISO(x).getDay()]}</i><b class="tnum">${parseISO(x).getDate()}</b></span>`).join('')}</span>` : ''}
         <span class="agc-cta">Ver ficha ${icon('chevR', 14)}</span>
       </span></button>`;
-  }).join('')}</div>`;
+  });
+  // Los ya celebrados van juntos arriba, en pequeño; luego los próximos
+  const isPast = c => /class="ag-card ag-mini past/.test(c), past = cards.filter(isPast), next = cards.filter(c => !isPast(c));
+  return `${past.length ? `<div class="ag-cards ag-cards-past">${past.join('')}</div>` : ''}${next.length ? `<div class="ag-cards">${next.join('')}</div>` : ''}`;
 }
 const WEEKDAYS_S = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
 function evRow(e, iso){
