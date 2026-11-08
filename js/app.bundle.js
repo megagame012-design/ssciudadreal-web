@@ -901,7 +901,7 @@ __def("js/pwa.js", function(__exports){
    App instalable: service worker, aviso de versión nueva, sin conexión
    ===================================================================== */
 const { icon, h } = __req("js/util.js");
-const { toast, alertBox } = __req("js/ui.js");
+const { toast } = __req("js/ui.js");
 
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); window.__installPrompt = e; });
 async function install(){
@@ -911,14 +911,13 @@ async function install(){
 
 function startPWA(){
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-    navigator.serviceWorker.register('sw.js').then(reg => {
-      // Hay una versión nueva esperando: aviso discreto para actualizar
-      const ask = async w => {
-        const i = await alertBox({ title:'Hay una versión nueva', text:'Actualiza para ver las últimas novedades de SS Ciudad Real.', buttons:[{ label:'Más tarde' }, { label:'Actualizar', bold:true }] });
-        if (i === 1) w.postMessage({ type:'skip-waiting' });
-      };
-      if (reg.waiting && navigator.serviceWorker.controller) ask(reg.waiting);
-      reg.addEventListener('updatefound', () => { const w = reg.installing; w && w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) ask(w); }); });
+    navigator.serviceWorker.register('/sw.js', { updateViaCache:'none' }).then(reg => {
+      // Versión nueva: se instala sola y la app se recarga (sin preguntar)
+      const go = w => { if (w && navigator.serviceWorker.controller) { toast('Actualizando la app…', 'sparkle'); w.postMessage({ type:'skip-waiting' }); } };
+      if (reg.waiting) go(reg.waiting);
+      reg.addEventListener('updatefound', () => { const w = reg.installing; w && w.addEventListener('statechange', () => { if (w.state === 'installed') go(w); }); });
+      // Al volver a la app (iOS la deja abierta en segundo plano), comprueba si hay versión nueva
+      document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') reg.update().catch(() => {}); });
     }).catch(() => {});
     let reloaded = false;
     navigator.serviceWorker.addEventListener('controllerchange', () => { if (!reloaded) { reloaded = true; location.reload(); } });

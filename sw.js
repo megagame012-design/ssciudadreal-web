@@ -1,8 +1,8 @@
 /* SS Ciudad Real · Service worker
    - Armazón y datos precargados: la app abre al instante y funciona sin conexión.
    - Fotos: se guardan según se ven (y todas, si se activa en Ajustes).
-   - Al publicar cambios, sube VERSION: la app avisará de que hay una versión nueva. */
-const VERSION = 'sscr-v2.1.57';
+   - Al publicar cambios, sube VERSION: la app se actualiza sola al abrirla. */
+const VERSION = 'sscr-v2.1.58';
 const CORE = VERSION + '-core', IMG = 'sscr-img', MAX_IMG = 400;
 const SHELL = ['/', '/index.html', '/manifest.webmanifest',
   '/css/tokens.css', '/css/base.css', '/css/components.css', '/css/screens.css',
@@ -10,7 +10,8 @@ const SHELL = ['/', '/index.html', '/manifest.webmanifest',
   '/icons/icon-192.png', '/icons/icon-512.png', '/icons/apple-touch-icon.png', '/icons/icon-32.png',
   '/img/portada.jpg', '/img/portada-640.jpg'];
 
-self.addEventListener('install', e => { e.waitUntil(caches.open(CORE).then(c => c.addAll(SHELL))); });
+// Se descarga todo de nuevo, sin la caché del navegador, para que cada versión llegue completa
+self.addEventListener('install', e => { e.waitUntil(caches.open(CORE).then(c => c.addAll(SHELL.map(u => new Request(u, { cache:'reload' }))))); });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.endsWith('-core') && k !== CORE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
