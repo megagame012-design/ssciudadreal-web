@@ -156,9 +156,18 @@ register('/hoy', 'hoy', () => {
   const ora = ORACIONES[TODAY.slice(5)];
   const prayer = ora ? `<section class="h-sec h-a-prayer"><div class="prayer selectable"><p class="overline">Oración · ${ora[0]}</p>${ora[1].map(p => `<p>${p}</p>`).join('')}<p class="amen">Amén.</p></div></section>` : '';
 
+  // Foto de portada según el día (la de siempre es la Soledad; los días señalados cambia sola).
+  // Cada foto va en img/ como NOMBRE.jpg (1200 px) y NOMBRE-640.jpg; «listo:false» hasta tenerla.
+  const PORTADAS = [
+    { desde:'2026-11-22', hasta:'2026-11-22', f:'img/portada-cristo-rey', alt:'Cristo Rey', listo:false },
+    { desde:'2026-11-27', hasta:'2026-11-27', f:'img/portada-milagrosa', alt:'Virgen de la Medalla Milagrosa', listo:false },
+    { desde:'2026-12-01', hasta:'2026-12-31', f:'img/portada-esperanza', alt:'Nuestra Señora de la Esperanza', listo:false }
+  ];
+  const por = PORTADAS.find(p => p.listo && TODAY >= p.desde && TODAY <= p.hasta) || { f:'img/portada', alt:'Dolorosa bajo palio, con corona y ráfaga, entre la candelería' };
+
   const content = `
     <header class="home-hero">
-      <picture class="hh-photo"><img src="img/portada.jpg" srcset="img/portada-640.jpg 600w, img/portada.jpg 1200w" sizes="(min-width:1024px) 55vw, 100vw" alt="Dolorosa bajo palio, con corona y ráfaga, entre la candelería" width="768" height="1024" fetchpriority="high" decoding="async"></picture>
+      <picture class="hh-photo"><img src="${por.f}.jpg" srcset="${por.f}-640.jpg 600w, ${por.f}.jpg 1200w" sizes="(min-width:1024px) 55vw, 100vw" alt="${por.alt}"${por.pos ? ` style="object-position:${por.pos}"` : ''} width="768" height="1024" fetchpriority="high" decoding="async"></picture>
       <div class="hh-text">
         <p class="hh-over">${dateOverline()}</p>
         <h1 class="hh-title">Semana Santa<span>de Ciudad Real</span></h1>

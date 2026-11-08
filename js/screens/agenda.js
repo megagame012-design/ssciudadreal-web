@@ -87,7 +87,7 @@ function monthCards(month){
     const herm = String(e.hermandad || '').replace(/,.*$/, '');
     // Festividades: tarjeta pequeña, con su icono (o una miniatura si lleva foto)
     if (e.quiet) return `<button type="button" class="ag-card ag-mini${past ? ' past' : ''}" data-ev="${e.id}" data-iso="${d}" data-days="${ds.join(' ')}" style="--c:${typeOf(t).color}">
-      <span class="agm-media${e.thumb || e.image ? ' ph' : ''}">${e.thumb || e.image ? img(e.thumb || e.image, 200, { pos:e.imagePos || '50% 20%' }) : icon(e.icon || 'sparkle', 30)}</span>
+      <span class="agm-media${e.thumb || e.image ? ' ph' : ''}">${e.thumb || e.image ? img(e.thumb || e.image, 200, { pos: e.thumb ? '50% 50%' : (e.imagePos || '50% 20%') }) : icon(e.icon || 'sparkle', 30)}</span>
       <span class="agm-body"><span class="agm-date">${WEEKDAYS_S[dt.getDay()]} ${dt.getDate()} ${MONTHS[dt.getMonth()].slice(0, 3)}<span class="agm-when${past ? ' is-past' : ''}">${when}</span></span>
         <span class="agm-title">${esc(e.title)}</span>
         ${e.sub || herm ? `<span class="agm-sub">${esc(e.sub || herm)}</span>` : ''}</span>

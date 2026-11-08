@@ -207,6 +207,8 @@ const P = {
   belen:'<path d="M3 11l3.5 7h11L21 11z"/><path d="M6.5 18 4.5 21M17.5 18l2 3"/><circle cx="12" cy="7" r="2"/><path d="M9 11c.8-1.3 1.8-2 3-2s2.2.7 3 2"/>',
   camello:'<path d="M3.5 14.5c0-2 .9-3.3 2.2-3.5.5-3 1.6-4.5 3-4.5s2.3 1.4 2.7 3.3c.5-1.4 1.3-2.3 2.4-2.3 1.3 0 2.3 1.6 2.6 4l1.5-5.4c.2-.8.9-1.3 1.7-1.2l1.4.3-.4 1.5h-1.1L18 14.5z"/><path d="M5.5 14.5V21M8.5 14.5V21M14 14.5V21M16.8 14.5V21"/>',
   corona:'<path d="M4 17.5 3 8l5 4 4-7 4 7 5-4-1 9.5z"/><path d="M4.5 21h15"/>',
+  cristoRey:'<path d="M5 19.5 4 10l4.5 3.5L12 8l3.5 5.5L20 10l-1 9.5z"/><path d="M12 2v5M10 4h4M4.5 22h15"/>',
+  medalla:'<path d="M8 2.5 12 8l4-5.5"/><ellipse cx="12" cy="15" rx="5.5" ry="6.5"/><path d="M12 11.5v6M10 13.5h4"/>',
   candle:'<path d="M9 21h6M10 21V11h4v10"/><path d="M12 8.5c-1.2-1-1.6-2.1-1-3.3.4-.8 1-1.5 1-2.7 1.3.9 2 2.2 2 3.5a2 2 0 0 1-2 2.5z"/>',
   wifiOff:'<path d="M3 3l18 18M8.5 16.5a5 5 0 0 1 7 0M5 13a10 10 0 0 1 5-2.7M19 13a10 10 0 0 0-2.3-1.7M2 9.5a15 15 0 0 1 4.5-2.8M22 9.5A15 15 0 0 0 11 6"/><circle cx="12" cy="20" r=".9" fill="currentColor" stroke="none"/>',
   sparkle:'<path d="M12 3c.6 4.3 2.7 6.4 7 7-4.3.6-6.4 2.7-7 7-.6-4.3-2.7-6.4-7-7 4.3-.6 6.4-2.7 7-7z"/>',
@@ -1889,9 +1891,18 @@ register('/hoy', 'hoy', () => {
   const ora = ORACIONES[TODAY.slice(5)];
   const prayer = ora ? `<section class="h-sec h-a-prayer"><div class="prayer selectable"><p class="overline">Oración · ${ora[0]}</p>${ora[1].map(p => `<p>${p}</p>`).join('')}<p class="amen">Amén.</p></div></section>` : '';
 
+  // Foto de portada según el día (la de siempre es la Soledad; los días señalados cambia sola).
+  // Cada foto va en img/ como NOMBRE.jpg (1200 px) y NOMBRE-640.jpg; «listo:false» hasta tenerla.
+  const PORTADAS = [
+    { desde:'2026-11-22', hasta:'2026-11-22', f:'img/portada-cristo-rey', alt:'Cristo Rey', listo:false },
+    { desde:'2026-11-27', hasta:'2026-11-27', f:'img/portada-milagrosa', alt:'Virgen de la Medalla Milagrosa', listo:false },
+    { desde:'2026-12-01', hasta:'2026-12-31', f:'img/portada-esperanza', alt:'Nuestra Señora de la Esperanza', listo:false }
+  ];
+  const por = PORTADAS.find(p => p.listo && TODAY >= p.desde && TODAY <= p.hasta) || { f:'img/portada', alt:'Dolorosa bajo palio, con corona y ráfaga, entre la candelería' };
+
   const content = `
     <header class="home-hero">
-      <picture class="hh-photo"><img src="img/portada.jpg" srcset="img/portada-640.jpg 600w, img/portada.jpg 1200w" sizes="(min-width:1024px) 55vw, 100vw" alt="Dolorosa bajo palio, con corona y ráfaga, entre la candelería" width="768" height="1024" fetchpriority="high" decoding="async"></picture>
+      <picture class="hh-photo"><img src="${por.f}.jpg" srcset="${por.f}-640.jpg 600w, ${por.f}.jpg 1200w" sizes="(min-width:1024px) 55vw, 100vw" alt="${por.alt}"${por.pos ? ` style="object-position:${por.pos}"` : ''} width="768" height="1024" fetchpriority="high" decoding="async"></picture>
       <div class="hh-text">
         <p class="hh-over">${dateOverline()}</p>
         <h1 class="hh-title">Semana Santa<span>de Ciudad Real</span></h1>
@@ -2056,7 +2067,7 @@ function monthCards(month){
     const herm = String(e.hermandad || '').replace(/,.*$/, '');
     // Festividades: tarjeta pequeña, con su icono (o una miniatura si lleva foto)
     if (e.quiet) return `<button type="button" class="ag-card ag-mini${past ? ' past' : ''}" data-ev="${e.id}" data-iso="${d}" data-days="${ds.join(' ')}" style="--c:${typeOf(t).color}">
-      <span class="agm-media${e.thumb || e.image ? ' ph' : ''}">${e.thumb || e.image ? img(e.thumb || e.image, 200, { pos:e.imagePos || '50% 20%' }) : icon(e.icon || 'sparkle', 30)}</span>
+      <span class="agm-media${e.thumb || e.image ? ' ph' : ''}">${e.thumb || e.image ? img(e.thumb || e.image, 200, { pos: e.thumb ? '50% 50%' : (e.imagePos || '50% 20%') }) : icon(e.icon || 'sparkle', 30)}</span>
       <span class="agm-body"><span class="agm-date">${WEEKDAYS_S[dt.getDay()]} ${dt.getDate()} ${MONTHS[dt.getMonth()].slice(0, 3)}<span class="agm-when${past ? ' is-past' : ''}">${when}</span></span>
         <span class="agm-title">${esc(e.title)}</span>
         ${e.sub || herm ? `<span class="agm-sub">${esc(e.sub || herm)}</span>` : ''}</span>

@@ -80,7 +80,9 @@ const LEYENDA_CALENDARIO = [
 { type: 'procesion', color: 'bg-[#D4AF37]', label: 'Procesiones' }
 ];
 const EVENTOS = [
-{"id": 104, "date": "2026-12-08", "title": "Inmaculada Concepción", "type": "festividad", "quiet": true, "icon": "inmaculada", "image": "img/inmaculada.jpg", "thumb": "img/inmaculada-640.jpg", "imagePos": "44% 2%", "credit": "Murillo · Museo del Prado"},
+{"id": 110, "date": "2026-11-22", "title": "Solemnidad de Jesucristo, Rey del Universo", "type": "festividad", "quiet": true, "icon": "cristoRey"},
+{"id": 111, "date": "2026-11-27", "title": "Virgen de la Medalla Milagrosa", "type": "festividad", "quiet": true, "icon": "medalla"},
+{"id": 104, "date": "2026-12-08", "title": "Inmaculada Concepción", "type": "festividad", "quiet": true, "icon": "inmaculada", "image": "img/inmaculada.jpg", "thumb": "img/inmaculada-cara.jpg", "imagePos": "44% 2%", "credit": "Murillo · Museo del Prado"},
 {"id": 105, "date": "2026-12-18", "title": "Festividad de Nuestra Señora de la Esperanza", "type": "festividad", "quiet": true, "icon": "ancla", "hermandad": "Hermandad Nuestra Señora de la Esperanza"},
 {"id": 106, "date": "2026-12-24", "title": "Nochebuena", "type": "festividad", "quiet": true, "icon": "estrella"},
 {"id": 107, "date": "2026-12-25", "title": "Natividad del Señor", "type": "festividad", "quiet": true, "icon": "belen"},
