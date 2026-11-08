@@ -42,7 +42,7 @@ export function eventView(id, iso, { hero = true } = {}){
       ${ds.length > 1 ? `<div class="ifc-days">${ds.map(x => { const dx = parseISO(x); return `<span class="${x === day ? 'on' : ''}"><i>${['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'][dx.getDay()]}</i><b>${dx.getDate()}</b></span>`; }).join('')}</div>` : ''}
     </section>
     <div class="ev-actions">
-      <button type="button" class="ev-act" data-ev-act="ics">${icon('calPlus', 22)}<span>Calendario</span></button>
+      ${e.quiet ? '' : `<button type="button" class="ev-act" data-ev-act="ics">${icon('calPlus', 22)}<span>Calendario</span></button>`}
       <button type="button" class="ev-act" data-ev-act="share">${icon('share', 22)}<span>Compartir</span></button>
       ${e.location ? `<a class="ev-act" href="${directionsURL(e.location)}" target="_blank" rel="noopener">${icon('directions', 22)}<span>Cómo llegar</span></a>` : ''}
       ${e.link ? `<a class="ev-act ev-act-main" href="${esc(e.link.url)}" target="_blank" rel="noopener">${icon('external', 22)}<span>${esc(e.link.label.replace('Comprar entradas', 'Entradas'))}</span></a>` : ''}

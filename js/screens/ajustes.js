@@ -106,7 +106,7 @@ register('/ajustes/mi-hermandad', 'ajustes', () => {
 
 /* ---------- Recordatorios ---------- */
 register('/ajustes/recordatorios', 'ajustes', () => screen({ title:'Recordatorios', large:false, grouped:true, content:`<div style="padding-top:16px">
-  ${section(TYPES.map(t => switchCell({ title:t.label, name:'rem:' + t.id, on: prefs.reminders[t.id] })), { head:'Avisarme de' })}
+  ${section(TYPES.filter(t => !t.noRem).map(t => switchCell({ title:t.label, name:'rem:' + t.id, on: prefs.reminders[t.id] })), { head:'Avisarme de' })}
   ${section([switchCell({ title:'Actos de Mi hermandad', name:'rem:mia', on: prefs.reminders.mia })], { foot:'Guardamos tus preferencias. Los avisos automáticos necesitan un servidor de notificaciones que la app todavía no tiene; mientras tanto, usa «Añadir al calendario» en cada acto y tu iPhone te avisará.' })}
 </div>`, setup: s => wireSwitches(s.el) }));
 

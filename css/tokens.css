@@ -39,7 +39,7 @@
   --press: 90ms;
 
   /* Tipos de acto (colores de sistema de iOS), oscuro por defecto */
-  --t-procesion: #E6C04D; --t-traslado: #0A84FF; --t-culto: #BF5AF2; --t-besamanos: #FF6961; --t-concierto: #FFD60A;
+  --t-procesion: #E6C04D; --t-traslado: #0A84FF; --t-culto: #BF5AF2; --t-besamanos: #FF6961; --t-concierto: #FFD60A; --t-festividad: #64D2FF;
 }
 
 /* ---------- Oscuro (Fotos sobre OLED) ---------- */
@@ -102,7 +102,7 @@
   --shadow-card: 0 8px 26px rgba(60,48,20,.14);
   --skeleton: #EFEBE2; --skeleton-hi: #F8F5EF;
   --gold-line: rgba(125,98,16,.28);
-  --t-procesion: #9A7612; --t-traslado: #0060DF; --t-culto: #8E3CC9; --t-besamanos: #C9302C; --t-concierto: #9C7A00;
+  --t-procesion: #9A7612; --t-traslado: #0060DF; --t-culto: #8E3CC9; --t-besamanos: #C9302C; --t-concierto: #9C7A00; --t-festividad: #0071A4;
   --accent: #7D6210; --on-accent: #FFFFFF; --accent-soft: rgba(125,98,16,.12);
 }
 

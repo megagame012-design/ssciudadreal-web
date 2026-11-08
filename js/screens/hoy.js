@@ -130,7 +130,7 @@ register('/hoy', 'hoy', () => {
   const bodies = {};
   bodies.urda = { overline:'EN MEMORIA', title:'Por las víctimas de Urda', tone:'mourning', body:urdaBody };
   bodies.cuenta = { overline:'CUENTA ATRÁS', title:`Domingo de Pasión ${countdown().y}`, photo:PASION_PHOTO, pos:'50% 38%', tone:'dark', body:countdownBody };
-  const seen = new Set(), upcoming = nextEvent().filter(x => x.d >= TODAY && !seen.has(x.e.id) && seen.add(x.e.id));
+  const seen = new Set(), upcoming = nextEvent().filter(x => x.d >= TODAY && !x.e.quiet && !seen.has(x.e.id) && seen.add(x.e.id));
   // Lo próximo: el primer acto con foto. Si hoy hay varios, los dos más destacados (el acto
   // señalado y un besamanos van antes que un culto que ya lleva días).
   const rank = x => x.e.feature ? 0 : x.e.type === 'besamanos' ? 1 : 2;
@@ -145,6 +145,17 @@ register('/hoy', 'hoy', () => {
   // Aviso de álbum nuevo en la Fototeca (se quita solo al pasar la fecha)
   const NEW_ALBUM = { id:'2026-11-05-soledad-triduo', hasta:new Date(2026, 10, 23), foto:'img/fototeca/2026-11-05-soledad-triduo/02.webp', title:'Triduo a la Soledad', sub:'12 fotografías de SS Ciudad Real' };
   const newAlbum = now() < NEW_ALBUM.hasta ? `<section class="h-sec h-a-album"><button type="button" class="h-ens" data-card="album"><span class="h-ens-media ph">${img(NEW_ALBUM.foto, 500, { pos:'50% 22%' })}</span><span class="h-ens-text"><span class="h-over">Nuevo en la Fototeca</span><span class="h-ens-title">${esc(NEW_ALBUM.title)}</span><span class="h-ens-next">${esc(NEW_ALBUM.sub)}</span></span>${icon('chevR', 18, 'h-chev')}</button></section>` : '';
+
+  // Oración del día en las festividades (solo el día que toca; se repite cada año)
+  const ORACIONES = {
+    '12-08': ['Inmaculada Concepción', ['Bendita sea tu pureza y eternamente lo sea, pues todo un Dios se recrea en tan graciosa belleza.', 'A ti, celestial Princesa, Virgen sagrada María, yo te ofrezco en este día alma, vida y corazón. Mírame con compasión, no me dejes, Madre mía.']],
+    '12-18': ['Nuestra Señora de la Esperanza', ['Madre de la Esperanza, que guardaste en tu seno al Hijo de Dios mientras el mundo entero lo esperaba, enséñanos a esperar como tú.', 'Mira con ternura a tu hermandad y a todos los que en Ciudad Real te llaman Madre. Que nunca nos falte la esperanza, ni en la alegría ni en la prueba.', 'Llévanos de tu mano hasta Jesús, que viene a salvarnos.']],
+    '12-24': ['Nochebuena', ['Señor Jesús, que esta noche quisiste nacer pobre en un portal de Belén, entra también en nuestras casas.', 'Que alrededor de nuestra mesa no falte la paz, y que recordemos con cariño a quienes ya no están y a quienes hoy pasan la noche solos.', 'Virgen María y San José, enseñadnos a recibirlo con un corazón sencillo.']],
+    '12-25': ['Natividad del Señor', ['Hoy nos ha nacido un Salvador: el Mesías, el Señor.', 'Niño Dios, que te hiciste uno de nosotros, llena el mundo de tu paz y nuestras familias de tu alegría.', 'Que esta Navidad te reconozcamos en el que sufre, en el que está solo y en el que más nos necesita.']],
+    '01-06': ['Epifanía del Señor', ['Señor, que guiaste a los Magos de Oriente con la luz de una estrella, guíanos también a nosotros hasta ti.', 'Como ellos, queremos ofrecerte lo mejor que tenemos: nuestra fe, nuestro trabajo y nuestro amor.', 'Que nunca dejemos de buscarte y que, al encontrarte, sepamos volver a casa por otro camino, el tuyo.']]
+  };
+  const ora = ORACIONES[TODAY.slice(5)];
+  const prayer = ora ? `<section class="h-sec h-a-prayer"><div class="prayer selectable"><p class="overline">Oración · ${ora[0]}</p>${ora[1].map(p => `<p>${p}</p>`).join('')}<p class="amen">Amén.</p></div></section>` : '';
 
   const content = `
     <header class="home-hero">
@@ -163,6 +174,7 @@ register('/hoy', 'hoy', () => {
           ${big ? `<section class="h-sec h-a-next${bigs.length > 1 ? ' two' : ''}">${shead('Lo próximo', big.d === TODAY ? 'Hoy' : esc(inDays(big.d)))}${bigs.map(b => featuredEvent(b.e, b.d)).join('')}</section>` : ''}
         </div>
         <div class="h-col">
+          ${prayer}
           ${newAlbum}
           ${rest.length ? `<section class="h-sec h-a-days">${shead('Agenda', 'Próximos días', '<button type="button" class="h-link" data-go="/agenda">Ver agenda</button>')}${dayRows(rest)}</section>` : ''}
           <section class="h-sec h-a-ens">${ensayosRow()}</section>
