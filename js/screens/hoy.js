@@ -210,12 +210,7 @@ register('/hoy', 'hoy', () => {
     curvedBand(band, bandItems('all'), { speed:3.6, tileHeight:72, curve:70, fade:10 });
     band.addEventListener('click', e => { const t = e.target.closest('[data-herm-band]'); if (!t) return; const [j, i] = t.dataset.hermBand.split('|'); const x = HERMS.find(z => z.j === j && z.i === +i); if (x) navigate(`/hermandades/${x.id}`); });
 
-    // Las secciones aparecen con un fundido suave al llegar a ellas
-    if ('IntersectionObserver' in window && !prefs.reduceMotion) {
-      const secs = $$('.h-sec, .today-band', s.el); secs.forEach(x => x.classList.add('h-reveal'));
-      const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), { root:s.scroller, rootMargin:'0px 0px -8% 0px' });
-      secs.forEach(x => io.observe(x));
-    }
+    // Sin fundido al bajar: las secciones están siempre visibles
 
     s.el.addEventListener('click', e => {
       const r = e.target.closest('[data-ev]'); if (r) { const [id, d] = r.dataset.ev.split('|'); openEvent(+id, d); return; }
