@@ -18,24 +18,6 @@ const NOTICIAS = [
 "images": []
 },
 {
-"id": 7,
-"date": "2026-11-01",
-"title": "La Soledad celebra su Solemne Triduo del 5 al 7 de noviembre",
-"source": "Información de la hermandad",
-"text": "La Real Cofradía de Nuestra Señora de la Soledad, Tercio de los Siete Dolores, Santa Cruz en el Monte Calvario, María Santísima de la Amargura y San Juan Evangelista consagrará, D. m., solemnes cultos en honor a Nuestra Señora de la Soledad los días 5, 6 y 7 de noviembre de 2026, a las 19:30 horas.\n\n**Jueves 5.** Exposición al Santísimo Sacramento y Santa Misa.\n\n**Viernes 6.** Rezo del Santo Rosario y Santa Misa. Tras la Eucaristía, jura de Reglas de los nuevos hermanos.\n\n**Sábado 7.** Rezo del Santo Rosario y Santa Misa. Al término, la bendita imagen estará expuesta en devoto besamanos.\n\nLa hermandad ruega a todos los hermanos su asistencia y participación en estos cultos, llevando la medalla de la hermandad.",
-"coverImage": "img/soledad-triduo-2026.jpg", "coverPos": "50% 30%",
-"images": []
-},
-{
-"id": 6,
-"date": "2026-11-01",
-"title": "El certamen de la I Feria Nacional Cofrade reunirá a 29 bandas el 7 y 8 de noviembre",
-"source": "I Feria Nacional Cofrade · Ciudad Real Monumental",
-"text": "A una semana de la cita, la I Feria Nacional Cofrade «Ciudad Real Monumental» ya tiene cerrado el cartel de su certamen de bandas. Las dos jornadas comenzarán a las 11:30 horas en el IFEDI, la Institución Ferial de la Diputación de Ciudad Real.\n\n**Sábado 7.** Nuestra Señora del Prado (Ciudad Real), Gran Poder (Granada), La Borriquilla (La Carolina), Cautivo de Toledo, Redención (Sevilla), «El Amarrado» (Ávila), Pasión de Linares, Presentación al Pueblo (Dos Hermanas), Salud de Córdoba, Rosario de Linares, Jesús Cautivo (Villa del Río), «Los Coloraos» (Daimiel), Nazareno de Arahal, Clave de Sol (Manises) y Asunción de Jódar.\n\n**Domingo 8.** Virgen de las Nieves (Almagro), Jesús Rescatado (Villanueva de los Infantes), Nazareno de Parla, Nuestra Señora del Prado (Ciudad Real), San Juan Evangelista (Bolaños), Soledad y Vera Cruz (Calzada de Calatrava), Jesús Nazareno (Membrilla), San Miguel Arcángel (Puertollano), Nuestro Padre Jesús Nazareno (Bolaños), Jesús Rescatado (Almodóvar del Campo), «La Concordia» (Argamasilla de Calatrava), Discípulos de Juan (Puertollano), «El Perdón» (Alcázar de San Juan) y Tres Caídas de Madrid.\n\nLa organiza la Banda de Cornetas y Tambores Nuestra Señora del Prado – La Pasión en su 35 aniversario. Las entradas están a la venta en Giglon.",
-"coverImage": "https://www.lanzadigital.com/wp-content/uploads/2026/10/FotoJet-2026-10-05T205529.169-768x432.jpg",
-"images": [IMG_FERIA_SAB, IMG_FERIA_DOM]
-},
-{
 "id": 1,
 "date": "2026-10",
 "title": "El Santo Descendimiento llevará a la Banda Coronación de Espinas de Córdoba",
@@ -43,15 +25,6 @@ const NOTICIAS = [
 "text": "La Hermandad del Santo Descendimiento de Ciudad Real ha anunciado que la Banda de Cornetas y Tambores Coronación de Espinas de Córdoba acompañará a su paso en la tarde del Viernes Santo.\n\nLa formación cordobesa, vinculada a la Hermandad de la Merced de Córdoba, llega a Ciudad Real en plena celebración de su 30 aniversario (1996–2026).\n\nSus sones acompañarán al Santísimo Cristo del Amor en su Descendimiento por las calles de la capital, una de las novedades musicales de la próxima Semana Santa.",
 "coverImage": IMG_BANDA,
 "images": [IMG_BANDA, IMG_CARTEL_DESC]
-},
-{
-"id": 3,
-"date": "2026-10-13",
-"title": "La I Feria Nacional Cofrade presenta sus 29 bandas para el 7 y 8 de noviembre",
-"source": "Lanza Digital · Feria Nacional Cofrade",
-"text": "La I Feria Nacional Cofrade «Ciudad Real Monumental» llenará el IFEDI los días 7 y 8 de noviembre. La organiza la Banda de Cornetas y Tambores Nuestra Señora del Prado – La Pasión, que celebra su 35 aniversario.\n\nLa organización ya ha presentado las bandas participantes: 15 formaciones el sábado 7 y 14 el domingo 8, llegadas de Ciudad Real y su provincia, Andalucía, Madrid, Toledo, Ávila y Valencia. Entre ellas, el Gran Poder de Granada, la Salud de Córdoba, la Presentación al Pueblo de Dos Hermanas o las Tres Caídas de Madrid.\n\nAmbas jornadas comenzarán a las 11:30 horas en el Pabellón Ferial (Calle Camino Viejo de Alarcos, 30). Las entradas están a la venta en Giglon desde 25 euros.\n\nAdemás del certamen, la feria contará con unos 40 expositores del mundo cofrade.",
-"coverImage": "https://www.lanzadigital.com/wp-content/uploads/2026/10/FotoJet-2026-10-05T205529.169-768x432.jpg",
-"images": [IMG_FERIA_SAB, IMG_FERIA_DOM]
 },
 {
 "id": 4,

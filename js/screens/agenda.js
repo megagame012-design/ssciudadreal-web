@@ -106,9 +106,9 @@ function monthCards(month){
         <span class="agc-cta">Ver ficha ${icon('chevR', 14)}</span>
       </span></button>`;
   });
-  // Los ya celebrados van juntos arriba, en pequeño; luego los próximos
+  // Primero los próximos; los ya celebrados, juntos al final y en pequeño
   const isPast = c => /class="ag-card ag-mini past/.test(c), past = cards.filter(isPast), next = cards.filter(c => !isPast(c));
-  return `${past.length ? `<div class="ag-cards ag-cards-past">${past.join('')}</div>` : ''}${next.length ? `<div class="ag-cards">${next.join('')}</div>` : ''}`;
+  return `${next.length ? `<div class="ag-cards">${next.join('')}</div>` : ''}${past.length ? `<div class="ag-cards ag-cards-past">${past.join('')}</div>` : ''}`;
 }
 const WEEKDAYS_S = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
 export function evRow(e, iso){

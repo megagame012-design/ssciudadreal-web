@@ -87,7 +87,7 @@ const urdaBody = () => `
    Una portada tranquila: una foto grande por sección como mucho, listas limpias
    y un adorno cofrade (filete dorado con cruz) para separar. */
 const LO_PROXIMO_PHOTO = {};   // foto distinta para la portada (por id de acto); si no, la del acto
-const NEWS_FIRST = 6;                                                                        // noticia destacada: el certamen
+const NEWS_FIRST = 8;                                                                        // noticia destacada: el certamen
 const day0 = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
 const daysTo = iso => Math.round((parseISO(iso) - day0()) / 864e5);
 const inDays = iso => { const n = daysTo(iso); return n <= 0 ? 'Hoy' : n === 1 ? 'Mañana' : `En ${n} días`; };
@@ -130,7 +130,7 @@ register('/hoy', 'hoy', () => {
   const bodies = {};
   bodies.urda = { overline:'EN MEMORIA', title:'Por las víctimas de Urda', tone:'mourning', body:urdaBody };
   bodies.cuenta = { overline:'CUENTA ATRÁS', title:`Domingo de Pasión ${countdown().y}`, photo:PASION_PHOTO, pos:'50% 38%', tone:'dark', body:countdownBody };
-  const seen = new Set(), upcoming = nextEvent().filter(x => x.d >= TODAY && !x.e.quiet && !seen.has(x.e.id) && seen.add(x.e.id));
+  const seen = new Set(), upcoming = nextEvent().filter(x => x.d >= TODAY && !x.e.quiet && !(x.e.doneAt && Date.now() >= Date.parse(x.e.doneAt) && evDates(x.e).every(d => d <= TODAY)) && !seen.has(x.e.id) && seen.add(x.e.id));
   // Lo próximo: el primer acto con foto. Si hoy hay varios, los dos más destacados (el acto
   // señalado y un besamanos van antes que un culto que ya lleva días).
   const rank = x => x.e.feature ? 0 : x.e.type === 'besamanos' ? 1 : 2;
@@ -203,7 +203,8 @@ register('/hoy', 'hoy', () => {
     s.scroller.addEventListener('scroll', () => {
       const yy = s.scroller.scrollTop;
       hero.querySelector('img').style.transform = yy < 0 ? `scale(${1 + -yy / 600})` : `translateY(${yy * 0.3}px)`;
-      nav.classList.toggle('solid', yy > hero.offsetHeight - 120);
+      // El logo (Ajustes) va arriba a la derecha y se va con la página al bajar; sin barra ni fundido
+      nav.style.transform = yy > 0 ? `translateY(${-yy}px)` : '';
     }, { passive:true });
     const band = $('.cband-today', s.el);
     curvedBand(band, bandItems('all'), { speed:3.6, tileHeight:72, curve:70, fade:10 });
