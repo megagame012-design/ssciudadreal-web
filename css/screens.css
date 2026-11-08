@@ -775,6 +775,18 @@ svg.inline{display:inline-block;vertical-align:-3px}
 .ag-mbody .month-grid{border-bottom:0;padding-bottom:6px}
 .ag-month-list{padding:6px 0 4px}
 .ag-none{display:flex;align-items:center;gap:8px;margin:2px var(--margin) 12px;padding:14px 16px;border-radius:14px;background:var(--cell);font-size:var(--t-subhead);color:var(--label-2)}
+.ev-hero-credit{position:absolute;z-index:3;right:12px;bottom:12px;padding:3px 8px;border-radius:var(--r-pill);background:rgba(10,9,8,.5);color:rgba(246,242,234,.85);font-size:11px;font-weight:500}
+/* Festividades: tarjeta pequeña */
+.ag-mini{flex-direction:row;align-items:center;gap:14px;padding:12px 14px 12px 12px;border-radius:20px;box-shadow:inset 0 0 0 .5px var(--sep),0 8px 22px rgba(0,0,0,.2);align-self:start}
+.agm-media{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:14px;overflow:hidden;color:color-mix(in srgb,var(--c) 75%,#fff);background:radial-gradient(90% 90% at 70% 0%,color-mix(in srgb,var(--c) 35%,transparent),transparent 75%),linear-gradient(160deg,#241c10,#0d0b08)}
+.agm-media img{width:100%;height:100%;object-fit:cover}
+.agm-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.agm-date{display:flex;align-items:center;gap:8px;font-size:var(--t-caption);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.agm-when{padding:2px 8px;border-radius:var(--r-pill);background:var(--fill-3,rgba(127,127,127,.18));color:var(--label-2);letter-spacing:.02em;text-transform:none;font-weight:600}
+.agm-when.is-past{background:rgba(48,176,84,.85);color:#fff}
+.agm-title{font-family:var(--serif);font-size:calc(var(--t-headline) * 1.25);font-weight:600;line-height:1.1;text-wrap:balance}
+.agm-sub{font-size:var(--t-subhead);color:var(--label-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agm-chev{flex:none;color:var(--label-3,var(--label-2))}
 .ag-card.past{opacity:.6}
 .ag-card.hl{box-shadow:0 0 0 2.5px var(--accent),var(--shadow-card)}
 .ag-extra{padding:4px var(--margin) 10px}

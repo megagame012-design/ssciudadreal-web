@@ -28,9 +28,9 @@ export function eventView(id, iso, { hero = true } = {}){
   const n = Math.round((d0 - new Date(new Date().setHours(0, 0, 0, 0))) / 864e5);
   const when = n < 0 ? 'Celebrado' : n === 0 ? 'Hoy' : n === 1 ? 'Mañana' : `En ${n} días`;
   const typeLine = `<p class="ev-type">${types.map(t => `${tdot(t)}<span>${typeOf(t).one}</span>`).join('<span class="sep">·</span>')}</p>`;
-  const hermLine = e.hermandad ? (hx ? `<button type="button" class="ev-herm" data-go="/hermandades/${hx.id}">${esc(e.hermandad)} ${icon('chevR', 14)}</button>` : `<p class="ev-herm-txt">${esc(e.hermandad)}</p>`) : '';
+  const hermLine = e.sub && !e.hermandad ? `<p class="ev-herm-txt">${esc(e.sub)}</p>` : e.hermandad ? (hx ? `<button type="button" class="ev-herm" data-go="/hermandades/${hx.id}">${esc(e.hermandad)} ${icon('chevR', 14)}</button>` : `<p class="ev-herm-txt">${esc(e.hermandad)}</p>`) : '';
   const html = `
-    ${pic && hero ? `<div class="ev-hero ph">${img(pic, 1200, { alt:'', pos: e.imagePos || '' })}<span class="ev-hero-shade"></span><span class="ev-hero-text">${typeLine}<span class="ev-hero-title selectable">${esc(e.title)}</span></span></div>` : ''}
+    ${pic && hero ? `<div class="ev-hero ph">${img(pic, 1200, { alt:'', pos: e.imagePos || '' })}<span class="ev-hero-shade"></span>${e.credit ? `<span class="ev-hero-credit">${esc(e.credit)}</span>` : ''}<span class="ev-hero-text">${typeLine}<span class="ev-hero-title selectable">${esc(e.title)}</span></span></div>` : ''}
     <header class="ev-head${pic && hero ? ' under' : ''}${pic ? '' : ' no-pic'}">
       ${pic && hero ? '' : `${typeLine}${hero || !pic ? `<h1 class="ev-title-big selectable">${esc(e.title)}</h1>` : ''}`}
       ${hermLine}

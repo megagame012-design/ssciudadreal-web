@@ -85,6 +85,13 @@ function monthCards(month){
     const last = ds[ds.length - 1], past = last < TODAY, n = Math.round((parseISO(d) - parseISO(TODAY)) / 864e5);
     const when = past ? 'Celebrado' : (ds.includes(TODAY) ? 'Hoy' : n === 1 ? 'Mañana' : n > 1 ? `En ${n} días` : 'En curso');
     const herm = String(e.hermandad || '').replace(/,.*$/, '');
+    // Festividades: tarjeta pequeña, con su icono (o una miniatura si lleva foto)
+    if (e.quiet) return `<button type="button" class="ag-card ag-mini${past ? ' past' : ''}" data-ev="${e.id}" data-iso="${d}" data-days="${ds.join(' ')}" style="--c:${typeOf(t).color}">
+      <span class="agm-media${e.thumb || e.image ? ' ph' : ''}">${e.thumb || e.image ? img(e.thumb || e.image, 200, { pos:e.imagePos || '50% 20%' }) : icon(e.icon || 'sparkle', 30)}</span>
+      <span class="agm-body"><span class="agm-date">${WEEKDAYS_S[dt.getDay()]} ${dt.getDate()} ${MONTHS[dt.getMonth()].slice(0, 3)}<span class="agm-when${past ? ' is-past' : ''}">${when}</span></span>
+        <span class="agm-title">${esc(e.title)}</span>
+        ${e.sub || herm ? `<span class="agm-sub">${esc(e.sub || herm)}</span>` : ''}</span>
+      ${icon('chevR', 16, 'agm-chev')}</button>`;
     return `<button type="button" class="ag-card${pic ? '' : ' no-pic'}${past ? ' past' : ''}" data-ev="${e.id}" data-iso="${d}" data-days="${ds.join(' ')}" style="--c:${typeOf(t).color}">
       <span class="agc-media${pic ? ' ph' : ''}">${pic ? img(pic, 900, { ws:[480, 900], sizes:'(min-width:760px) 45vw, 92vw', pos:e.imagePos || '50% 25%' }) : `<span class="agc-ill">${icon('candle', 44)}</span>`}
         <span class="agc-stamp"><i>${WEEKDAYS_S[dt.getDay()]}</i><b class="tnum">${ds.length > 1 ? `${dt.getDate()}–${parseISO(last).getDate()}` : dt.getDate()}</b><em>${MONTHS[dt.getMonth()].slice(0, 3)}</em></span>
