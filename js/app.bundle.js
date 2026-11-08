@@ -1869,6 +1869,10 @@ register('/hoy', 'hoy', () => {
   const my = prefs.hermandad && hermById(prefs.hermandad), pd = my && procDateFor(my);
   const memorial = now() < new Date(2026, 10, 3) ? `<button type="button" class="h-memorial" data-card="urda">${icon('lazo', 22)}<span><b>En memoria de las víctimas de Urda</b><small>Oración, teléfonos de ayuda y dónde donar sangre</small></span>${icon('chevR', 16, 'h-chev')}</button>` : '';
 
+  // Aviso de álbum nuevo en la Fototeca (se quita solo al pasar la fecha)
+  const NEW_ALBUM = { id:'2026-11-05-soledad-triduo', hasta:new Date(2026, 10, 23), foto:'img/fototeca/2026-11-05-soledad-triduo/02.webp', title:'Triduo a la Soledad', sub:'12 fotografías de SS Ciudad Real' };
+  const newAlbum = now() < NEW_ALBUM.hasta ? `<section class="h-sec h-a-album"><button type="button" class="h-ens" data-card="album"><span class="h-ens-media ph">${img(NEW_ALBUM.foto, 500, { pos:'50% 22%' })}</span><span class="h-ens-text"><span class="h-over">Nuevo en la Fototeca</span><span class="h-ens-title">${esc(NEW_ALBUM.title)}</span><span class="h-ens-next">${esc(NEW_ALBUM.sub)}</span></span>${icon('chevR', 18, 'h-chev')}</button></section>` : '';
+
   const content = `
     <header class="home-hero">
       <picture class="hh-photo"><img src="img/portada.jpg" srcset="img/portada-640.jpg 600w, img/portada.jpg 1200w" sizes="(min-width:1024px) 55vw, 100vw" alt="Dolorosa bajo palio, con corona y ráfaga, entre la candelería" width="768" height="1024" fetchpriority="high" decoding="async"></picture>
@@ -1886,6 +1890,7 @@ register('/hoy', 'hoy', () => {
           ${big ? `<section class="h-sec h-a-next${bigs.length > 1 ? ' two' : ''}">${shead('Lo próximo', big.d === TODAY ? 'Hoy' : esc(inDays(big.d)))}${bigs.map(b => featuredEvent(b.e, b.d)).join('')}</section>` : ''}
         </div>
         <div class="h-col">
+          ${newAlbum}
           ${rest.length ? `<section class="h-sec h-a-days">${shead('Agenda', 'Próximos días', '<button type="button" class="h-link" data-go="/agenda">Ver agenda</button>')}${dayRows(rest)}</section>` : ''}
           <section class="h-sec h-a-ens">${ensayosRow()}</section>
           ${my ? `<section class="h-sec h-a-mine"><button type="button" class="h-ens" data-card="mia"><span class="h-ens-media ph">${img(my.h.image, 500, { pos:'50% 22%' })}</span><span class="h-ens-text"><span class="h-over">Mi hermandad</span><span class="h-ens-title">${esc(my.name)}</span>${pd ? `<span class="h-ens-next">${esc(pd.title)} · ${fmtShort(pd.iso)}</span>` : ''}</span>${icon('chevR', 18, 'h-chev')}</button></section>` : ''}
@@ -1927,6 +1932,7 @@ register('/hoy', 'hoy', () => {
       if (id === 'mia') { navigate(`/hermandades/${prefs.hermandad}`); return; }
       if (id === 'calle') { navigate('/hermandades'); return; }
       if (id === 'ensayos') { navigate('/ensayos'); return; }
+      if (id === 'album') { navigate(`/fototeca/album/${NEW_ALBUM.id}`); return; }
       const b = bodies[id]; if (!b) return;
       const hero2 = xhero(b);
       if (b.event) { const v = eventView(b.event.id, b.event.d, { hero:false }); expandCard(c, { hero:hero2, body: v.html, label:b.title, wire: el => v.wire(el) }); return; }
