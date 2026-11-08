@@ -909,11 +909,25 @@ async function install(){
   p.prompt(); try { await p.userChoice; } catch (e) {} window.__installPrompt = null; return true;
 }
 
+/* Aviso de actualización: tarjeta arriba con el logo y una barra que avanza; al volver, confirmación */
+function showUpdating(){
+  if (document.querySelector('.upd-card')) return;
+  const c = h(`<div class="upd-card glass" role="status" aria-live="polite"><img src="icons/icon-192.png" alt="" width="40" height="40"><span class="upd-txt"><b>Nueva versión de SS Ciudad Real</b><small>Instalando las novedades…</small></span><i class="upd-bar"><i></i></i></div>`);
+  document.body.appendChild(c); requestAnimationFrame(() => c.classList.add('is-on'));
+}
+function confirmUpdated(){
+  let done = false; try { done = sessionStorage.getItem('sscr-updated') === '1'; sessionStorage.removeItem('sscr-updated'); } catch (e) {}
+  if (!done) return;
+  const say = v => setTimeout(() => toast(`Ya tienes la última versión${v ? ' · ' + v : ''}`, 'check'), 600);
+  if (window.caches) caches.keys().then(ks => { const k = ks.find(x => /^sscr-v[\d.]+-core$/.test(x)); say(k ? k.slice(6, -5) : ''); }).catch(() => say('')); else say('');
+}
+
 function startPWA(){
+  confirmUpdated();
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('/sw.js', { updateViaCache:'none' }).then(reg => {
       // Versión nueva: se instala sola y la app se recarga (sin preguntar)
-      const go = w => { if (w && navigator.serviceWorker.controller) { toast('Actualizando la app…', 'sparkle'); w.postMessage({ type:'skip-waiting' }); } };
+      const go = w => { if (!w || !navigator.serviceWorker.controller) return; showUpdating(); try { sessionStorage.setItem('sscr-updated', '1'); } catch (e) {} setTimeout(() => w.postMessage({ type:'skip-waiting' }), 900); };
       if (reg.waiting) go(reg.waiting);
       reg.addEventListener('updatefound', () => { const w = reg.installing; w && w.addEventListener('statechange', () => { if (w.state === 'installed') go(w); }); });
       // Al volver a la app (iOS la deja abierta en segundo plano), comprueba si hay versión nueva
@@ -1225,7 +1239,7 @@ function eventView(id, iso, { hero = true } = {}){
   const typeLine = `<p class="ev-type">${types.map(t => `${tdot(t)}<span>${typeOf(t).one}</span>`).join('<span class="sep">·</span>')}</p>`;
   const hermLine = e.sub && !e.hermandad ? `<p class="ev-herm-txt">${esc(e.sub)}</p>` : e.hermandad ? (hx ? `<button type="button" class="ev-herm" data-go="/hermandades/${hx.id}">${esc(e.hermandad)} ${icon('chevR', 14)}</button>` : `<p class="ev-herm-txt">${esc(e.hermandad)}</p>`) : '';
   const html = `
-    ${pic && hero ? `<div class="ev-hero ph">${img(pic, 1200, { alt:'', pos: e.imagePos || '' })}<span class="ev-hero-shade"></span>${e.credit ? `<span class="ev-hero-credit">${esc(e.credit)}</span>` : ''}<span class="ev-hero-text">${typeLine}<span class="ev-hero-title selectable">${esc(e.title)}</span></span></div>` : ''}
+    ${pic && hero ? `<div class="ev-hero ph">${img(pic, 1200, { alt:'', pos: e.imagePos || '' })}<span class="ev-hero-shade"></span><span class="ev-hero-text">${typeLine}<span class="ev-hero-title selectable">${esc(e.title)}</span>${e.credit ? `<span class="ev-hero-credit">${esc(e.credit)}</span>` : ''}</span></div>` : ''}
     <header class="ev-head${pic && hero ? ' under' : ''}${pic ? '' : ' no-pic'}">
       ${pic && hero ? '' : `${typeLine}${hero || !pic ? `<h1 class="ev-title-big selectable">${esc(e.title)}</h1>` : ''}`}
       ${hermLine}
