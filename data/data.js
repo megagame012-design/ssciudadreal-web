@@ -53,7 +53,7 @@ const LEYENDA_CALENDARIO = [
 { type: 'procesion', color: 'bg-[#D4AF37]', label: 'Procesiones' }
 ];
 const EVENTOS = [
-{"id": 110, "date": "2026-11-22", "title": "Solemnidad de Jesucristo, Rey del Universo", "type": "festividad", "quiet": true, "big": true, "icon": "cristoRey", "image": "img/portada-cristo-rey.jpg", "thumb": "img/cristo-rey-cara.jpg", "imagePos": "50% 38%"},
+{"id": 110, "date": "2026-11-22", "title": "Solemnidad de Jesucristo, Rey del Universo", "type": "festividad", "quiet": true, "big": true, "icon": "cristoRey", "image": "img/portada-cristo-rey.jpg", "thumb": "img/cristo-rey-cara.jpg", "imagePos": "45% 40%"},
 {"id": 111, "date": "2026-11-27", "title": "Virgen de la Medalla Milagrosa", "type": "festividad", "quiet": true, "big": true, "icon": "medalla", "image": "img/portada-milagrosa.jpg", "thumb": "img/milagrosa-cara.jpg", "imagePos": "50% 24%"},
 {"id": 104, "date": "2026-12-08", "title": "Inmaculada Concepción", "type": "festividad", "quiet": true, "icon": "inmaculada", "image": "img/inmaculada.jpg", "thumb": "img/inmaculada-cara.jpg", "imagePos": "44% 2%", "credit": "Murillo"},
 {"id": 105, "date": "2026-12-18", "title": "Festividad de Nuestra Señora de la Esperanza", "type": "festividad", "quiet": true, "big": true, "image": "img/portada-esperanza.jpg", "thumb": "img/esperanza-cara.jpg", "imagePos": "50% 30%", "icon": "ancla", "hermandad": "Hermandad Nuestra Señora de la Esperanza"},

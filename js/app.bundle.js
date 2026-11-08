@@ -1906,7 +1906,7 @@ register('/hoy', 'hoy', () => {
   // Foto de portada según el día (la de siempre es la Soledad; los días señalados cambia sola).
   // Cada foto va en img/ como NOMBRE.jpg (1200 px) y NOMBRE-640.jpg; «listo:false» hasta tenerla.
   const PORTADAS = [
-    { desde:'2026-11-22', hasta:'2026-11-22', f:'img/portada-cristo-rey', alt:'Cristo Rey, con corona de espinas y potencias, túnica blanca y manto rojo', pos:'50% 35%', listo:true },
+    { desde:'2026-11-22', hasta:'2026-11-22', f:'img/portada-cristo-rey', alt:'Nazareno con la cruz al hombro, corona de espinas y potencias, ante un cuadro', pos:'44% 38%', listo:true },
     { desde:'2026-11-27', hasta:'2026-11-27', f:'img/portada-milagrosa', alt:'Virgen de la Medalla Milagrosa en un retablo cerámico', pos:'50% 22%', listo:true },
     { desde:'2026-12-01', hasta:'2026-12-31', f:'img/portada-esperanza', alt:'Nuestra Señora de la Esperanza, con corona y ráfaga y tocado de encaje', pos:'50% 30%', listo:true }
   ];
