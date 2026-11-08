@@ -2,7 +2,7 @@
    - Armazón y datos precargados: la app abre al instante y funciona sin conexión.
    - Fotos: se guardan según se ven (y todas, si se activa en Ajustes).
    - Al publicar cambios, sube VERSION: la app avisará de que hay una versión nueva. */
-const VERSION = 'sscr-v2.1.53';
+const VERSION = 'sscr-v2.1.54';
 const CORE = VERSION + '-core', IMG = 'sscr-img', MAX_IMG = 400;
 const SHELL = ['/', '/index.html', '/manifest.webmanifest',
   '/css/tokens.css', '/css/base.css', '/css/components.css', '/css/screens.css',
