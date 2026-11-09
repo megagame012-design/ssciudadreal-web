@@ -5,6 +5,7 @@ import { applyPrefs, prefs, setPref, onPrefs } from './settings.js';
 import { installSpringCurves } from './spring.js';
 import { startRouter } from './router.js';
 import { startPWA } from './pwa.js';
+import { contarVisita } from './visitas.js';
 import { icon, markLoaded } from './util.js';
 import { openSheet } from './ui.js';
 import './screens/hoy.js';
@@ -19,6 +20,7 @@ applyPrefs();
 installSpringCurves();
 startRouter();
 startPWA();
+contarVisita();
 
 /* Estado de carga de las imágenes (esqueleto con brillo hasta que llegan) */
 document.addEventListener('load', e => { if (e.target.tagName === 'IMG') e.target.classList.add('is-loaded'); }, true);

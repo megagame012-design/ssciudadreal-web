@@ -946,6 +946,29 @@ function startPWA(){
 
 Object.assign(__exports, { install, startPWA });
 });
+__def("js/visitas.js", function(__exports){
+/* =====================================================================
+   Contador de visitas anónimo (sin cookies ni datos personales).
+   Una visita por sesión del navegador; un visitante por dispositivo.
+   Solo cuenta en ssciudadreal.es (no en pruebas locales).
+   Lectura: https://abacus.jasoncameron.dev/get/ssciudadreal/<clave>
+   ===================================================================== */
+const API = 'https://abacus.jasoncameron.dev/hit/ssciudadreal/';
+function contarVisita(){
+  try {
+    if (location.hostname !== 'ssciudadreal.es' || navigator.webdriver) return;
+    if (sessionStorage.getItem('sscr-visita')) return;
+    sessionStorage.setItem('sscr-visita', '1');
+    const d = new Date(), dia = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+    const app = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+    const claves = ['visitas', 'dia-' + dia, app ? 'app' : 'navegador'];
+    if (!localStorage.getItem('sscr-visitante')) { localStorage.setItem('sscr-visitante', '1'); claves.push('visitantes', 'nuevos-' + dia); }
+    claves.forEach(k => fetch(API + k, { mode:'cors', keepalive:true }).catch(() => {}));
+  } catch (e) {}
+}
+
+Object.assign(__exports, { contarVisita });
+});
 __def("js/expand.js", function(__exports){
 /* =====================================================================
    Tarjeta que se expande a pantalla completa (pestaña Hoy del App Store)
@@ -2851,6 +2874,7 @@ register('/ajustes/datos', 'ajustes', () => screen({ title:'Datos y almacenamien
   ${section([cell({ title:'Espacio sin conexión', value:'<span data-usage>Calculando…</span>', chev:false })], { foot:'La agenda, las hermandades y las fotos que ya has visto se guardan para usarlas sin conexión.' })}
   ${section([switchCell({ title:'Descargar fotos para usar sin conexión', name:'offlinePhotos', on: prefs.offlinePhotos })], { foot:'Guarda en el móvil la foto principal y la galería de cada hermandad. Ocupa unos 30 MB.' })}
   ${section([cell({ title:'Borrar caché', action:'clear-cache', danger:true, chev:false })])}
+  <p class="section-foot" style="padding:0 var(--margin) 24px">Contamos las visitas de forma anónima, sin cookies ni datos personales, solo para saber cuánta gente usa la web.</p>
 </div>`, setup: s => {
   wireSwitches(s.el);
   const show = async () => { const u = $('[data-usage]', s.el); try { const est = await navigator.storage.estimate(); u.textContent = (est.usage / 1048576).toFixed(1).replace('.', ',') + ' MB'; } catch (e) { u.textContent = 'No disponible'; } };
@@ -2967,6 +2991,7 @@ const { applyPrefs, prefs, setPref, onPrefs } = __req("js/settings.js");
 const { installSpringCurves } = __req("js/spring.js");
 const { startRouter } = __req("js/router.js");
 const { startPWA } = __req("js/pwa.js");
+const { contarVisita } = __req("js/visitas.js");
 const { icon, markLoaded } = __req("js/util.js");
 const { openSheet } = __req("js/ui.js");
 __req("js/screens/hoy.js");
@@ -2981,6 +3006,7 @@ applyPrefs();
 installSpringCurves();
 startRouter();
 startPWA();
+contarVisita();
 
 /* Estado de carga de las imágenes (esqueleto con brillo hasta que llegan) */
 document.addEventListener('load', e => { if (e.target.tagName === 'IMG') e.target.classList.add('is-loaded'); }, true);

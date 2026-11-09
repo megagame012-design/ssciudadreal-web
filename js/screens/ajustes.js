@@ -143,6 +143,7 @@ register('/ajustes/datos', 'ajustes', () => screen({ title:'Datos y almacenamien
   ${section([cell({ title:'Espacio sin conexión', value:'<span data-usage>Calculando…</span>', chev:false })], { foot:'La agenda, las hermandades y las fotos que ya has visto se guardan para usarlas sin conexión.' })}
   ${section([switchCell({ title:'Descargar fotos para usar sin conexión', name:'offlinePhotos', on: prefs.offlinePhotos })], { foot:'Guarda en el móvil la foto principal y la galería de cada hermandad. Ocupa unos 30 MB.' })}
   ${section([cell({ title:'Borrar caché', action:'clear-cache', danger:true, chev:false })])}
+  <p class="section-foot" style="padding:0 var(--margin) 24px">Contamos las visitas de forma anónima, sin cookies ni datos personales, solo para saber cuánta gente usa la web.</p>
 </div>`, setup: s => {
   wireSwitches(s.el);
   const show = async () => { const u = $('[data-usage]', s.el); try { const est = await navigator.storage.estimate(); u.textContent = (est.usage / 1048576).toFixed(1).replace('.', ',') + ' MB'; } catch (e) { u.textContent = 'No disponible'; } };
