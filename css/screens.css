@@ -1019,3 +1019,10 @@ svg.inline{display:inline-block;vertical-align:-3px}
   .screen.home .cband-today{height:clamp(340px,30vw,420px)}
   .screen.home .home-foot{padding-bottom:40px}
 }
+
+/* Hermandades de gloria */
+.herm-seg{padding-top:4px;padding-bottom:12px}
+.g-nopic{display:grid;place-items:center;width:100%;height:100%;color:color-mix(in srgb,var(--accent) 70%,#fff);background:radial-gradient(80% 80% at 70% 10%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 70%),linear-gradient(160deg,#241c10,#0d0b08)}
+.hf-hero.no-pic .hf-media{background:#0d0b08}
+.g-tit .ifc{margin-left:0;margin-right:0}
+.g-tit .ev-desc{margin-top:12px}

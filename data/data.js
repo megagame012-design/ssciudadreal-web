@@ -53,7 +53,8 @@ const LEYENDA_CALENDARIO = [
 { type: 'procesion', color: 'bg-[#D4AF37]', label: 'Procesiones' }
 ];
 const EVENTOS = [
-{"id": 110, "date": "2026-11-22", "title": "Solemnidad de Jesucristo, Rey del Universo", "type": "festividad", "quiet": true, "big": true, "icon": "cristoRey", "image": "img/portada-cristo-rey.jpg", "thumb": "img/cristo-rey-cara.jpg", "imagePos": "45% 40%"},
+{"id": 112, "date": "2026-11-22", "title": "Besapiés al Santísimo Cristo de la Luz", "type": "besamanos", "timeTxt": "Hora por confirmar", "location": "Convento del Carmen (Carmelitas Descalzas)", "hermandad": "Hermandad del Carmen", "gloria": "carmen", "image": "img/portada-cristo-rey.jpg", "imagePos": "45% 38%", "desc": "Con motivo de la Solemnidad de Cristo Rey."},
+{"id": 110, "date": "2026-11-22", "title": "Solemnidad de Jesucristo, Rey del Universo", "type": "festividad", "quiet": true, "big": true, "celebran": [{"herm": "Palmas", "sub": "Nuestro Padre Jesús de la Humildad"}, {"gloria": "carmen", "sub": "Santísimo Cristo de la Luz"}], "icon": "cristoRey", "image": "img/portada-cristo-rey.jpg", "thumb": "img/cristo-rey-cara.jpg", "imagePos": "45% 40%"},
 {"id": 111, "date": "2026-11-27", "title": "Virgen de la Medalla Milagrosa", "type": "festividad", "quiet": true, "big": true, "icon": "medalla", "image": "img/portada-milagrosa.jpg", "thumb": "img/milagrosa-cara.jpg", "imagePos": "50% 24%"},
 {"id": 104, "date": "2026-12-08", "title": "Inmaculada Concepción", "type": "festividad", "quiet": true, "icon": "inmaculada", "image": "img/inmaculada.jpg", "thumb": "img/inmaculada-cara.jpg", "imagePos": "44% 2%", "credit": "Murillo"},
 {"id": 105, "date": "2026-12-18", "title": "Festividad de Nuestra Señora de la Esperanza", "type": "festividad", "quiet": true, "big": true, "image": "img/portada-esperanza.jpg", "thumb": "img/esperanza-cara.jpg", "imagePos": "50% 30%", "icon": "ancla", "hermandad": "Hermandad Nuestra Señora de la Esperanza"},
@@ -85,6 +86,53 @@ const HERMANDADES_DATA = [
 { jornada: "SÁBADO SANTO", items: [ { nombre: "Hermandad de Nuestra Señora Soledad y María Santísima de la Amargura", nombreCorto: "Hermandad de la Soledad y Amargura", titulares: "Soledad y Amargura", musica: "Coral Santísima Trinidad (Torralba de Cva) y A.M. Santa Cecilia (Calzada de Cva)", fundacion: "1565", autoria: "José Rivera y Luis Marco Pérez", hermanos: "400", portadores: "Amargura 40, Soledad 35", sede: "Parroquia San Pedro", distancia: "No especificado", puntosInteres: "No especificados", itinerarioHorarios: "Itinerario y horarios detallados en confirmación.", image: "https://res.cloudinary.com/dzonbpspb/image/upload/v1772806859/IMG_8892_hd4dew.jpg", galeria: ["https://res.cloudinary.com/dzonbpspb/image/upload/v1772806863/IMG_8890_toqaff.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772806860/IMG_8893_puje6w.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772806860/IMG_8889_zqskid.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772807039/IMG_9187_jj6c8n.jpg"] } ] },
 { jornada: "DOMINGO DE RESURRECCIÓN", items: [ { nombre: "Jesús Resucitado y María Santísima de la Alegría", titulares: "Jesús Resucitado y María Santísima de la Alegría", musica: "A.M. Santo Tomás de Villanueva (Ciudad Real) y Banda de Música Ciudad Real", autoria: "Manuel Martín Nieto y Méndez Lastrucci", portadores: "Resucitado 35, Alegría 30", sede: "Catedral", distancia: "No especificado", puntosInteres: "No especificados", itinerarioHorarios: "Itinerario y horarios detallados en confirmación.", image: "https://res.cloudinary.com/dzonbpspb/image/upload/v1772808229/IMG_9196_mmuk89.jpg", galeria: ["https://res.cloudinary.com/dzonbpspb/image/upload/v1772808229/IMG_9195_uwvszt.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772808274/IMG_9193_xkecpc.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772808237/IMG_9194_nmpqh8.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772808230/IMG_9197_b6v146.jpg"] } ] }
 ];
+/* Hermandades de gloria (no salen en Semana Santa). Fotos: «image» es la portada y «galeria» el resto. */
+const GLORIA = [
+  { id:'carmen', nombre:'Hermandad del Carmen',
+    completo:'Hermandad y Cofradía de Ntra. Madre la Stma. Virgen del Carmen, Santa Teresa de Jesús y RR. MM. Carmelitas Descalzas',
+    titulares:'Virgen del Carmen, Santa Teresa de Jesús y Santísimo Cristo de la Luz',
+    sede:'Convento del Carmen (Carmelitas Descalzas)', image:'img/portada-cristo-rey.jpg', imagePos:'45% 38%', galeria:['img/santa-teresa.webp'],
+    resumen:'Su devoción está profundamente unida al Convento de las Madres Carmelitas Descalzas, en el barrio del Carmen. Venera a la Virgen del Carmen, a Santa Teresa de Jesús y al Santísimo Cristo de la Luz.',
+    titulos:[
+      { n:'Virgen del Carmen', fecha:'16 de julio', hora:'21:00 h', salida:'Convento del Carmen',
+        historia:'Es la gran devoción mariana del barrio del Carmen y de la ciudad. La imagen que presidía el altar mayor salía en procesión hasta 1962, cuando se incorporó una nueva talla para desfilar por las calles, que ha cumplido 25 años en su forma procesional actual.',
+        recorrido:'Convento del Carmen, Estación Vía Crucis, Paz, Rosa, Caballeros, Pasaje y Plaza de la Merced, Toledo, Feria, Prado y Azucena. Recogida hacia las 23:00 h.' },
+      { n:'Santa Teresa de Jesús', fecha:'15 de octubre', hora:'Por la tarde', salida:'Convento del Carmen',
+        historia:'La imagen de la santa abulense, fundadora de las Carmelitas Descalzas, procesionó por primera vez por las calles de Ciudad Real en 1952.',
+        recorrido:'Sale del Convento de las Carmelitas acompañada de fieles, autoridades y bandas de la ciudad.' },
+      { n:'Santísimo Cristo de la Luz',
+        historia:'Venerado desde tiempos inmemoriales dentro del propio convento. No tiene salida procesional propia: es un titular de culto interno que recibe a lo largo del año visitas, oraciones y ofrendas florales de devotos y colegios de la ciudad.' }
+    ] },
+  { id:'virgen-de-la-cabeza', nombre:'Hermandad de la Virgen de la Cabeza',
+    titulares:'Nuestra Señora de la Virgen de la Cabeza', sede:'Parroquia de Santo Tomás de Villanueva', image:'', galeria:[],
+    fundacion:'1995', autoria:'Miguel Gallego',
+    resumen:'La devoción a la Virgen de la Cabeza tiene siglos de arraigo en la provincia, con hermandades filiales muy antiguas como la de Valdepeñas. La cofradía de la capital es más reciente: su imagen, obra del escultor Miguel Gallego, llegó en febrero de 1995 y la hermandad salió por primera vez en procesión el 14 de mayo de ese mismo año.',
+    titulos:[
+      { n:'Virgen de la Cabeza', fecha:'Principios de junio o finales de mayo, según el calendario', hora:'19:00 h', salida:'Parroquia de Santo Tomás de Villanueva',
+        recorrido:'Recorre las calles más céntricas de la ciudad y regresa a su templo hacia las 22:00 h.' }
+    ] },
+  { id:'virgen-del-prado', nombre:'Hermandad de la Virgen del Prado',
+    completo:'Real e Ilustre Hermandad y Corte de Honor de Nuestra Señora la Virgen del Prado',
+    titulares:'Nuestra Señora la Virgen del Prado, Patrona de Ciudad Real', sede:'Catedral de Ciudad Real', image:'', galeria:[],
+    fundacion:'1600', hermanos:'Unos 800 alumbrando en agosto',
+    resumen:'La Virgen del Prado es la Patrona de Ciudad Real y la devoción mariana más multitudinaria de la capital. Desde 2023, la Hermandad y la Corte de Honor forman una sola corporación.',
+    historia:[
+      'Sus antecedentes se remontan al siglo XVI, cuando se la conocía como Cofradía de la Cera o de las Hachas. Se conserva una ratificación de sus ordenanzas del 25 de mayo de 1571, hecha por el Gobernador del Arzobispado de Toledo.',
+      'La fundación oficial de la Ilustre Hermandad es del 13 de mayo de 1600.',
+      'En mayo de 1921 el Cabildo Catedralicio creó la Corte de Honor para organizar el Novenario de mayo y el Triduo de agosto y cuidar el ajuar de la Virgen. En 2023 la Hermandad, tradicionalmente de hombres, y la Corte de Honor, tradicionalmente de mujeres, se fusionaron en una sola entidad.',
+      'Fue coronada canónicamente el 28 de mayo de 1967 en la Plaza Mayor, en una ceremonia presidida por el obispo Prior de las Órdenes Militares, Juan Hervás Benet, con la Bula del Papa Pablo VI. En 1988, en el IX Centenario de su aparición, la Reina Doña Sofía aceptó el nombramiento de Camarera de Honor.'
+    ],
+    titulos:[
+      { n:'15 de agosto · Día de la Patrona', fecha:'15 de agosto', hora:'20:00 h', salida:'Catedral',
+        historia:'Es la procesión central del año, con unos 800 hermanos y hermanas alumbrando con cirios.',
+        recorrido:'Catedral, Prado, Azucena, Estación Vía Crucis, Toledo, Calatrava, Paloma, Carlos Vázquez, Plaza Mayor, Paseo del Prado y regreso a la Catedral.' },
+      { n:'31 de julio · La Pandorga', fecha:'31 de julio',
+        historia:'Fiesta de Interés Turístico. La Virgen no procesiona, pero recibe en la Catedral una multitudinaria ofrenda de flores y frutos de peñas, asociaciones y vecinos vestidos con el traje regional.' },
+      { n:'25 de mayo · San Urbano', fecha:'25 de mayo',
+        historia:'Aniversario de la aparición de la imagen en 1088. Se renueva el solemne Voto de la Ciudad a su Patrona y termina el Novenario de mayo.' }
+    ] }
+];
+
 const COMUNIDAD_COFRADE = [
 { name: "cr_cofrade", type: "Instagram", handle: "@cr_cofradee", img: "https://res.cloudinary.com/dcyltfj1w/image/upload/v1773427364/Photoroom_20260313_193958_pc354i.png", link: "https://www.instagram.com/cr_cofradee?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
 { name: "Costalero Romántico", type: "Instagram", handle: "@costaleroromantico", img: "https://res.cloudinary.com/dcyltfj1w/image/upload/v1773427364/Photoroom_20260313_194059_o5dlbr.png", link: "https://www.instagram.com/costaleroromantico?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
@@ -233,11 +281,21 @@ const ENSAYOS = [
       { t:'traslado', f:'2027-03-13', h:'20:15', titulo:'Traslado de la Virgen' },
       { t:'muda', f:'2027-03-20', h:'17:00' },
       { t:'desarma', f:'2027-03-29', h:'', hTxt:'Hora por determinar' } ] },
-  { id:'penas', paso:'Nuestro Señor Jesús de las Penas', herm:'Penas',
-    notas:[], lema:'Por los costaleros de la vida',
+  { id:'penas', paso:'Nuestro Señor Jesús de las Penas', herm:'Penas', calzado:'negro',
+    notas:['Asistencia obligatoria', 'Calzado negro de salida', 'Máxima puntualidad'], lema:'Por los costaleros de la vida',
     citas:[
       { t:'comida', f:'2026-12-12', h:'14:00', l:'Casa Hermandad de la Soledad' },
-      { t:'iguala', f:'2026-12-12', h:'17:00', l:'Casa Hermandad de la Soledad' } ] },
+      { t:'iguala', f:'2026-12-12', h:'17:00', l:'Casa Hermandad de la Soledad' },
+      { t:'ensayo', f:'2027-02-27', h:'16:00', titulo:'Único ensayo' },
+      { t:'traslado', f:'2027-03-14', h:'11:00', titulo:'Traslado del Señor' },
+      { t:'muda', f:'2027-03-20', h:'11:00' } ] },
+  { id:'soledad', paso:'Nuestra Señora de la Soledad', herm:'Soledad', foto:'img/fototeca/2026-11-05-soledad-triduo/07.webp', foco:'50% 38%',   // 7.ª foto del álbum del triduo (la eligió el usuario)
+    notas:[], lema:'Por los costaleros de la vida',
+    citas:[
+      { t:'iguala', f:'2027-02-07', h:'10:30', l:GUARDAPASOS, titulo:'Igualá y ensayo' },
+      { t:'ensayo', n:1, f:'2027-02-21', h:'10:30', l:GUARDAPASOS },
+      { t:'ensayo', n:2, f:'2027-03-07', h:'10:30', l:GUARDAPASOS },
+      { t:'muda', f:'2027-03-20', h:'16:00', l:GUARDAPASOS } ] },
   { id:'huerto', paso:'Oración en el Huerto de los Olivos', herm:'Oración en el Huerto', calzado:'blanco',
     notas:['Imprescindible el calzado blanco de procesión'],
     citas:[

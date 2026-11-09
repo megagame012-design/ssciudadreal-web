@@ -1229,7 +1229,7 @@ function eventView(id, iso, { hero = true } = {}){
   const pic = e.image || (herms[0] && herms[0].h.image);
   const types = evTypesOn(e, day);
   const firstOut = herms.map(x => salida(x.h)).filter(Boolean).sort()[0];
-  const time = timeOf(e) ? `${timeOf(e)} h${e.end ? ' – ' + e.end + ' h' : ''}` : (firstOut ? `Primera salida a las ${firstOut} h` : 'Todo el día');
+  const time = timeOf(e) ? `${timeOf(e)} h${e.end ? ' – ' + e.end + ' h' : ''}` : (firstOut ? `Primera salida a las ${firstOut} h` : (e.timeTxt || 'Todo el día'));
   const hx = hermOf(e);
   const url = `${location.origin}/agenda/${day}/${e.id}`;
   const gallery = e.gallery && e.gallery.length ? (e.link ? [...e.gallery] : [e.image, ...e.gallery]) : [];
@@ -1237,7 +1237,12 @@ function eventView(id, iso, { hero = true } = {}){
   const n = Math.round((d0 - new Date(new Date().setHours(0, 0, 0, 0))) / 864e5);
   const when = n < 0 ? 'Celebrado' : n === 0 ? 'Hoy' : n === 1 ? 'Mañana' : `En ${n} días`;
   const typeLine = `<p class="ev-type">${types.map(t => `${tdot(t)}<span>${typeOf(t).one}</span>`).join('<span class="sep">·</span>')}</p>`;
-  const hermLine = e.sub && !e.hermandad ? `<p class="ev-herm-txt">${esc(e.sub)}</p>` : e.hermandad ? (hx ? `<button type="button" class="ev-herm" data-go="/hermandades/${hx.id}">${esc(e.hermandad)} ${icon('chevR', 14)}</button>` : `<p class="ev-herm-txt">${esc(e.hermandad)}</p>`) : '';
+  // Hermandad de gloria (Carmen, Virgen de la Cabeza…): enlaza a su ficha
+  const gl = e.gloria && typeof GLORIA !== 'undefined' ? GLORIA.find(g => g.id === e.gloria) : null;
+  // Hermandades que celebran el acto (p. ej. Cristo Rey): de penitencia por nombre o de gloria por id
+  const celeb = (e.celebran || []).map(c => { if (c.gloria) { const g = typeof GLORIA !== 'undefined' && GLORIA.find(x => x.id === c.gloria); return g && { go:`/hermandades/gloria/${g.id}`, name:g.nombre, sub:c.sub || g.titulares, pic:g.image }; }
+    const x = HERMS.find(h => h.name.includes(c.herm) || h.h.nombre.includes(c.herm)); return x && { go:`/hermandades/${x.id}`, name:x.h.nombreCorto || x.name, sub:c.sub || x.h.titulares, pic:x.h.image }; }).filter(Boolean);
+  const hermLine = gl ? `<button type="button" class="ev-herm" data-go="/hermandades/gloria/${gl.id}">${esc(gl.nombre)} ${icon('chevR', 14)}</button>` : e.sub && !e.hermandad ? `<p class="ev-herm-txt">${esc(e.sub)}</p>` : e.hermandad ? (hx ? `<button type="button" class="ev-herm" data-go="/hermandades/${hx.id}">${esc(e.hermandad)} ${icon('chevR', 14)}</button>` : `<p class="ev-herm-txt">${esc(e.hermandad)}</p>`) : '';
   const html = `
     ${pic && hero ? `<div class="ev-hero ph">${img(pic, 1200, { alt:'', pos: e.imagePos || '' })}<span class="ev-hero-shade"></span><span class="ev-hero-text">${typeLine}<span class="ev-hero-title selectable">${esc(e.title)}</span>${e.credit ? `<span class="ev-hero-credit">${esc(e.credit)}</span>` : ''}</span></div>` : ''}
     <header class="ev-head${pic && hero ? ' under' : ''}${pic ? '' : ' no-pic'}">
@@ -1257,6 +1262,7 @@ function eventView(id, iso, { hero = true } = {}){
       ${e.link ? `<a class="ev-act ev-act-main" href="${esc(e.link.url)}" target="_blank" rel="noopener">${icon('external', 22)}<span>${esc(e.link.label.replace('Comprar entradas', 'Entradas'))}</span></a>` : ''}
     </div>
     ${e.fullDesc || e.desc ? `<section class="ev-about"><h2 class="ev-h2">Sobre el acto</h2><div class="ev-desc selectable">${(e.fullDesc || esc(e.desc)).split(/\n{2,}/).map(p => `<p>${p.replace(/<\/b>\s*\n/g, '</b>').replace(/\n/g, '<br>')}</p>`).join('')}</div></section>` : ''}
+    ${celeb.length ? `<section class="section"><h2 class="ev-h2">Celebran la festividad</h2><div class="group">${celeb.map(c => `<button type="button" class="cell tall" data-go="${c.go}"><span class="ph cell-thumb">${c.pic ? img(c.pic, 120, { cls:'cell-thumb', pos:'50% 30%' }) : ''}</span><span class="cell-body"><span class="cell-row-wrap"><span style="flex:1;min-width:0"><span class="cell-title">${esc(c.name)}</span>${c.sub ? `<span class="cell-sub" style="display:block">${esc(c.sub)}</span>` : ''}</span>${icon('chevR', 18, 'cell-chev')}</span></span></button>`).join('')}</div></section>` : ''}
     ${gallery.length ? `<section class="ev-about"><h2 class="ev-h2">Imágenes</h2><div class="ev-gallery">${gallery.map((g, k) => `<button type="button" class="pg-item ph" data-evph="${k}" aria-label="Imagen ${k + 1}">${img(g, 600)}</button>`).join('')}</div></section>` : ''}
     ${herms.length ? `<section class="section"><h2 class="ev-h2">Hermandades en la calle</h2><div class="group">${herms.map(x => { const s = salida(x.h); return `<button type="button" class="cell tall" data-go="/hermandades/${x.id}"><span class="ph cell-thumb">${img(x.h.image, 120, { cls:'cell-thumb' })}</span><span class="cell-body"><span class="cell-row-wrap"><span style="flex:1;min-width:0"><span class="cell-title">${esc(x.name)}</span><span class="cell-sub" style="display:block">${esc(x.h.sede || titleCase(x.j))}</span></span>${s ? `<span class="cell-value tnum">${s}</span>` : ''}${icon('chevR', 18, 'cell-chev')}</span></span></button>`; }).join('')}</div><p class="section-foot">Horas de salida de 2026, orientativas hasta que se publique la guía de 2027.</p></section>` : ''}
 `;
@@ -2393,7 +2399,7 @@ __def("js/screens/hermandades.js", function(__exports){
 const { icon, esc, $, $$, img, cld, slug, titleCase, isMissing, HERMS, hermById, JF, salida, entrada, procDateFor, fmtLong, fmtShort, timelineRows, share, parseISO, MONTHS, TODAY, nextSS, evDates, timeOf, directionsURL, downloadICS, store } = __req("js/util.js");
 const { screen, register, navigate } = __req("js/router.js");
 const { prefs, setPref } = __req("js/settings.js");
-const { toast, longPress, openSheet } = __req("js/ui.js");
+const { toast, longPress, openSheet, segmented, moveSeg } = __req("js/ui.js");
 const { cell, section, searchBar, wireSearch, norm, profileBtn } = __req("js/screens/common.js");
 const { openViewer } = __req("js/screens/visor.js");
 const { curvedBand } = __req("js/mapa.js");
@@ -2424,9 +2430,24 @@ function jornadaView(jn){
     <div class="hgrid" role="list" aria-label="Hermandades de ${titleCase(jn)}">${HERMS.filter(x => x.j === jn).map(hcard).join('')}</div>
     ${j.items.length > 1 ? `<p class="hgrid-hint">Desliza para ver las ${j.items.length} hermandades</p>` : ''}`;
 }
+/* ---------- Hermandades de gloria ---------- */
+const GL = typeof GLORIA !== 'undefined' ? GLORIA : [];
+const gloriaById = id => GL.find(g => g.id === id);
+const gPic = (g, w, pos) => g.image ? img(g.image, w, { pos: pos || g.imagePos || '50% 22%', alt:esc(g.titulares || g.nombre) }) : `<span class="g-nopic">${icon('church', 44)}</span>`;
+const gcard = g => `<button type="button" class="h-card" data-go="/hermandades/gloria/${g.id}">
+    <span class="h-media ph">${gPic(g, 800)}</span>
+    <span class="h-body">
+      <span class="h-name">${esc(g.nombre.replace(/^Hermandad (de la |del |de )?/, ''))}</span>
+      ${g.titulares ? `<span class="h-tit">${esc(g.titulares)}</span>` : ''}
+      <span class="h-meta">${g.titulos && g.titulos[0] && g.titulos[0].fecha ? `<span>${icon('agenda', 14)} ${esc(g.titulos[0].fecha.split(',')[0])}</span>` : ''}${g.sede ? `<span>${icon('church', 14)} ${esc(g.sede.replace(/^Parroquia (de )?/, ''))}</span>` : ''}</span>
+    </span></button>`;
+const gloriaView = () => `<div class="jinfo"><div><h2 class="jinfo-title">Hermandades de gloria</h2><p class="jinfo-sub">${GL.length} hermandades · Sus fiestas y procesiones durante el año</p></div></div>
+    <div class="hgrid" role="list" aria-label="Hermandades de gloria">${GL.map(gcard).join('')}</div>`;
+
 function searchView(q){
   const r = ALL.filter(x => norm(`${x.name} ${x.h.titulares || ''} ${x.h.sede || ''} ${x.j}`).includes(q));
-  return r.length ? `<p class="jinfo-sub hsearch-count">${r.length} ${r.length === 1 ? 'resultado' : 'resultados'}</p><div class="hgrid">${r.map(hcard).join('')}</div>` : `<p class="empty-note">No hay ninguna hermandad que coincida.</p>`;
+  const g = GL.filter(x => norm(`${x.nombre} ${x.completo || ''} ${x.titulares || ''} ${x.sede || ''}`).includes(q)), n = r.length + g.length;
+  return n ? `<p class="jinfo-sub hsearch-count">${n} ${n === 1 ? 'resultado' : 'resultados'}</p><div class="hgrid">${r.map(hcard).join('')}${g.map(gcard).join('')}</div>` : `<p class="empty-note">No hay ninguna hermandad que coincida.</p>`;
 }
 /* La jornada que viene (o la primera si ya pasó la Semana Santa) */
 function firstJornada(){
@@ -2436,15 +2457,19 @@ function firstJornada(){
 }
 
 register('/hermandades', 'hermandades', () => {
-  let cur = firstJornada(), q = '';
+  let cur = firstJornada(), q = '', tipo = store.get('sscr-herm-tipo') === 'gloria' ? 'gloria' : 'penitencia';
   const content = `${searchBar('Buscar hermandad, titular o sede', 'herm')}
-    <div class="jtabs-wrap">${jtabs(cur)}</div>
-    <div class="herm-view">${jornadaView(cur)}</div>`;
+    <div class="seg-wrap herm-seg">${segmented([['penitencia', 'Penitencia'], ['gloria', 'Gloria']], tipo, { glass:true, label:'Tipo de hermandad' })}</div>
+    <div class="jtabs-wrap"${tipo === 'gloria' ? ' hidden' : ''}>${jtabs(cur)}</div>
+    <div class="herm-view">${tipo === 'gloria' ? gloriaView() : jornadaView(cur)}</div>`;
   return screen({ title:'Hermandades', titleAside: profileBtn(), content, setup: s => {
     const view = $('.herm-view', s.el), tabs = $('.jtabs-wrap', s.el);
-    const show = () => { view.innerHTML = q ? searchView(q) : jornadaView(cur); tabs.hidden = !!q; };
+    const segW = $('.herm-seg', s.el);
+    const show = () => { view.innerHTML = q ? searchView(q) : tipo === 'gloria' ? gloriaView() : jornadaView(cur); tabs.hidden = !!q || tipo === 'gloria'; segW.hidden = !!q; };
     wireSearch(s.el, v => { q = v; show(); });
     s.el.addEventListener('click', e => {
+      const sg = e.target.closest('[data-seg]');
+      if (sg) { tipo = sg.dataset.seg; store.set('sscr-herm-tipo', tipo); moveSeg(sg.parentElement, tipo); show(); if (tipo === 'penitencia') requestAnimationFrame(() => { const a = $('.jtab[aria-selected=true]', s.el); if (a) a.scrollIntoView({ inline:'center', block:'nearest' }); }); return; }
       const t = e.target.closest('[data-jornada]'); if (!t) return;
       cur = t.dataset.jornada; $$('.jtab', s.el).forEach(b => b.setAttribute('aria-selected', b === t));
       t.scrollIntoView({ inline:'center', block:'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
@@ -2490,6 +2515,7 @@ function itinerary(rows){
 }
 
 register('/hermandades/([^/]+)/([^/]+)', 'hermandades', (js, hs) => {
+  if (js === 'gloria') return gloriaScreen(hs);
   const x = hermById(`${js}/${hs}`); if (!x) return null;
   const hh = x.h, out = salida(hh), inn = entrada(hh), proc = procDateFor(x);
   const photos = [...new Set([hh.image, ...(hh.galeria || [])])].filter(Boolean);
@@ -2611,7 +2637,73 @@ register('/hermandades/([^/]+)/([^/]+)', 'hermandades', (js, hs) => {
   } });
 });
 
-Object.assign(__exports, { hermMenu });
+/* ---------- Ficha de hermandad de gloria ---------- */
+function gloriaActs(g){
+  const words = keyWords(g.completo || g.nombre);
+  return EVENTOS.filter(e => e.gloria === g.id || (e.hermandad && words.length > 1 && words.filter(w => slug(e.hermandad).includes(w)).length >= 2))
+    .map(e => ({ e, d: evDates(e).find(d => d >= TODAY) })).filter(a => a.d).sort((a, b) => a.d.localeCompare(b.d)).slice(0, 4);
+}
+function gloriaScreen(id){
+  const g = gloriaById(id); if (!g) return null;
+  const photos = [g.image, ...(g.galeria || [])].filter(Boolean);
+  const acts = gloriaActs(g);
+  const name = g.nombre.replace(/^Hermandad (de la |del |de )?/, '');
+  const tiles = [g.fundacion && { k:'Fundación', v:g.fundacion, big:true }, g.hermanos && { k:'Hermanos', v:g.hermanos, wide:true }, g.autoria && { k:'Autoría de la imagen', v:g.autoria, wide:true }].filter(Boolean)
+    .map(t => `<div class="hf-tile${t.wide ? ' wide' : ''}${t.big ? ' big' : ''}"><span class="hft-k">${t.k}</span><span class="hft-v${t.big ? ' tnum' : ''} selectable">${esc(t.v)}</span></div>`).join('');
+  const row = (ic, k, v) => v ? `<div class="ifc-row">${icon(ic, 20)}<span><small>${k}</small><span class="selectable">${esc(v)}</span></span></div>` : '';
+  const content = `
+    <header class="hf-hero${g.image ? '' : ' no-pic'}">
+      <div class="hf-media ph">${g.image ? img(g.image, 1400, { alt:esc(g.titulares || g.nombre), eager:true, ws:[640, 1000, 1400], sizes:'100vw', pos: g.imagePos || '50% 22%' }) : `<span class="g-nopic">${icon('church', 64)}</span>`}</div>
+      <span class="hf-shade"></span>
+      <div class="hf-text">
+        <p class="hf-over">Hermandad de gloria</p>
+        <h1 class="hf-name">${esc(name)}</h1>
+        ${g.completo ? `<p class="hf-full">${esc(g.completo)}</p>` : ''}
+      </div>
+    </header>
+    ${g.sede ? `<section class="ifc" aria-label="Sede">${row('church', 'Sede', g.sede)}</section>` : ''}
+    <div class="ev-actions">
+      ${g.sede ? `<a class="ev-act" href="${directionsURL(g.sede)}" target="_blank" rel="noopener">${icon('directions', 22)}<span>Cómo llegar</span></a>` : ''}
+      <button type="button" class="ev-act" data-act="share">${icon('share', 22)}<span>Compartir</span></button>
+    </div>
+    ${g.titulares ? `<section class="hf-tit"><p class="hf-tit-k">Sagrados titulares</p><p class="hf-tit-v selectable">${esc(g.titulares)}</p></section>` : ''}
+    ${g.resumen ? `<section class="ev-about"><h2 class="ev-h2">La hermandad</h2><div class="ev-desc selectable"><p>${esc(g.resumen)}</p></div></section>` : ''}
+    ${tiles ? `<section class="hf-sec"><div class="hf-tiles">${tiles}</div></section>` : ''}
+    ${g.historia ? `<section class="ev-about"><h2 class="ev-h2">Historia</h2><div class="ev-desc selectable">${g.historia.map(p => `<p>${esc(p)}</p>`).join('')}</div></section>` : ''}
+    ${(g.titulos || []).map(ti => `<section class="hf-sec g-tit"><h2 class="ev-h2">${esc(ti.n)}</h2>
+      ${ti.fecha || ti.hora || ti.salida ? `<section class="ifc">${row('agenda', 'Fecha', ti.fecha)}${row('clock', 'Hora', ti.hora)}${row('pin', 'Salida', ti.salida)}</section>` : ''}
+      ${ti.historia || ti.recorrido ? `<div class="ev-desc selectable">${ti.historia ? `<p>${esc(ti.historia)}</p>` : ''}${ti.recorrido ? `<p><b>Recorrido.</b> ${esc(ti.recorrido)}</p>` : ''}</div>` : ''}
+    </section>`).join('')}
+    ${acts.length ? `<section class="hf-sec"><h2 class="ev-h2">Próximos actos</h2><div class="hf-acts hscroll">
+      ${acts.map(({ e, d }) => { const dd = parseISO(d); return `<button type="button" class="hf-act" data-ev="${e.id}" data-iso="${d}">
+        <span class="hfa-media ph">${img(e.image || g.image, 600, { pos: e.imagePos || '50% 25%' })}<span class="hfa-stamp"><b class="tnum">${dd.getDate()}</b><em>${MONTHS[dd.getMonth()].slice(0, 3)}</em></span></span>
+        <span class="hfa-t">${esc(e.title)}</span><span class="hfa-s">${esc(timeOf(e) ? timeOf(e) + ' h' : fmtShort(d))}${e.location ? ` · ${esc(e.location)}` : ''}</span></button>`; }).join('')}
+    </div></section>` : ''}
+    ${photos.length > 1 ? `<section class="hf-sec herm-band"><h2 class="ev-h2">Fotos · ${photos.length}</h2><div class="cband cband-herm" role="group" aria-label="Fotos de la hermandad. Toca una para verla en grande"></div>
+      <div class="hf-pad"><button type="button" class="btn btn-gray btn-wide" data-act="fotos">${icon('fototeca', 20)} Ver las ${photos.length} fotos</button></div></section>` : ''}
+`;
+  return screen({ title: g.nombre, navTitle: name, large:false, grouped:true, clearNav:true, content, setup: s => {
+    s.el.classList.add('has-stretch', 'hf-screen');
+    const head = $('.hf-hero', s.el), pic = $('.hf-media img', s.el), nav = s.navbar;
+    s.scroller.addEventListener('scroll', () => {
+      const y = s.scroller.scrollTop, hH = head.offsetHeight;
+      if (pic) pic.style.transform = y < 0 ? `scale(${1 + -y / hH})` : `translateY(${y * 0.3}px)`;
+      const solid = y > hH - 100; nav.classList.toggle('solid', solid); nav.classList.toggle('show-title', solid); nav.classList.toggle('over-photo', !solid);
+    }, { passive:true });
+    nav.classList.add('over-photo');
+    const items = photos.map(u => ({ url:u, credit:g.nombre }));
+    const band = $('.cband-herm', s.el); if (band) curvedBand(band, photos.map((src, k) => ({ src, name:'data-ph', val:k })), { speed:4, tileHeight:74, curve:68, fade:10 });
+    s.el.addEventListener('click', e => {
+      const p = e.target.closest('[data-ph]'); if (p) { openViewer(items, +p.dataset.ph, p); return; }
+      const ev = e.target.closest('[data-ev]'); if (ev) { openEvent(+ev.dataset.ev, ev.dataset.iso); return; }
+      const a = e.target.closest('[data-act]'); if (!a) return;
+      if (a.dataset.act === 'share') share(g.nombre, `${location.origin}/hermandades/gloria/${g.id}`, toast);
+      if (a.dataset.act === 'fotos') openViewer(items, 0, band);
+    });
+  } });
+}
+
+Object.assign(__exports, { gloriaById, hermMenu });
 });
 __def("js/screens/ajustes.js", function(__exports){
 /* =====================================================================

@@ -20,7 +20,7 @@ export function eventView(id, iso, { hero = true } = {}){
   const pic = e.image || (herms[0] && herms[0].h.image);
   const types = evTypesOn(e, day);
   const firstOut = herms.map(x => salida(x.h)).filter(Boolean).sort()[0];
-  const time = timeOf(e) ? `${timeOf(e)} h${e.end ? ' – ' + e.end + ' h' : ''}` : (firstOut ? `Primera salida a las ${firstOut} h` : 'Todo el día');
+  const time = timeOf(e) ? `${timeOf(e)} h${e.end ? ' – ' + e.end + ' h' : ''}` : (firstOut ? `Primera salida a las ${firstOut} h` : (e.timeTxt || 'Todo el día'));
   const hx = hermOf(e);
   const url = `${location.origin}/agenda/${day}/${e.id}`;
   const gallery = e.gallery && e.gallery.length ? (e.link ? [...e.gallery] : [e.image, ...e.gallery]) : [];
@@ -28,7 +28,12 @@ export function eventView(id, iso, { hero = true } = {}){
   const n = Math.round((d0 - new Date(new Date().setHours(0, 0, 0, 0))) / 864e5);
   const when = n < 0 ? 'Celebrado' : n === 0 ? 'Hoy' : n === 1 ? 'Mañana' : `En ${n} días`;
   const typeLine = `<p class="ev-type">${types.map(t => `${tdot(t)}<span>${typeOf(t).one}</span>`).join('<span class="sep">·</span>')}</p>`;
-  const hermLine = e.sub && !e.hermandad ? `<p class="ev-herm-txt">${esc(e.sub)}</p>` : e.hermandad ? (hx ? `<button type="button" class="ev-herm" data-go="/hermandades/${hx.id}">${esc(e.hermandad)} ${icon('chevR', 14)}</button>` : `<p class="ev-herm-txt">${esc(e.hermandad)}</p>`) : '';
+  // Hermandad de gloria (Carmen, Virgen de la Cabeza…): enlaza a su ficha
+  const gl = e.gloria && typeof GLORIA !== 'undefined' ? GLORIA.find(g => g.id === e.gloria) : null;
+  // Hermandades que celebran el acto (p. ej. Cristo Rey): de penitencia por nombre o de gloria por id
+  const celeb = (e.celebran || []).map(c => { if (c.gloria) { const g = typeof GLORIA !== 'undefined' && GLORIA.find(x => x.id === c.gloria); return g && { go:`/hermandades/gloria/${g.id}`, name:g.nombre, sub:c.sub || g.titulares, pic:g.image }; }
+    const x = HERMS.find(h => h.name.includes(c.herm) || h.h.nombre.includes(c.herm)); return x && { go:`/hermandades/${x.id}`, name:x.h.nombreCorto || x.name, sub:c.sub || x.h.titulares, pic:x.h.image }; }).filter(Boolean);
+  const hermLine = gl ? `<button type="button" class="ev-herm" data-go="/hermandades/gloria/${gl.id}">${esc(gl.nombre)} ${icon('chevR', 14)}</button>` : e.sub && !e.hermandad ? `<p class="ev-herm-txt">${esc(e.sub)}</p>` : e.hermandad ? (hx ? `<button type="button" class="ev-herm" data-go="/hermandades/${hx.id}">${esc(e.hermandad)} ${icon('chevR', 14)}</button>` : `<p class="ev-herm-txt">${esc(e.hermandad)}</p>`) : '';
   const html = `
     ${pic && hero ? `<div class="ev-hero ph">${img(pic, 1200, { alt:'', pos: e.imagePos || '' })}<span class="ev-hero-shade"></span><span class="ev-hero-text">${typeLine}<span class="ev-hero-title selectable">${esc(e.title)}</span>${e.credit ? `<span class="ev-hero-credit">${esc(e.credit)}</span>` : ''}</span></div>` : ''}
     <header class="ev-head${pic && hero ? ' under' : ''}${pic ? '' : ' no-pic'}">
@@ -48,6 +53,7 @@ export function eventView(id, iso, { hero = true } = {}){
       ${e.link ? `<a class="ev-act ev-act-main" href="${esc(e.link.url)}" target="_blank" rel="noopener">${icon('external', 22)}<span>${esc(e.link.label.replace('Comprar entradas', 'Entradas'))}</span></a>` : ''}
     </div>
     ${e.fullDesc || e.desc ? `<section class="ev-about"><h2 class="ev-h2">Sobre el acto</h2><div class="ev-desc selectable">${(e.fullDesc || esc(e.desc)).split(/\n{2,}/).map(p => `<p>${p.replace(/<\/b>\s*\n/g, '</b>').replace(/\n/g, '<br>')}</p>`).join('')}</div></section>` : ''}
+    ${celeb.length ? `<section class="section"><h2 class="ev-h2">Celebran la festividad</h2><div class="group">${celeb.map(c => `<button type="button" class="cell tall" data-go="${c.go}"><span class="ph cell-thumb">${c.pic ? img(c.pic, 120, { cls:'cell-thumb', pos:'50% 30%' }) : ''}</span><span class="cell-body"><span class="cell-row-wrap"><span style="flex:1;min-width:0"><span class="cell-title">${esc(c.name)}</span>${c.sub ? `<span class="cell-sub" style="display:block">${esc(c.sub)}</span>` : ''}</span>${icon('chevR', 18, 'cell-chev')}</span></span></button>`).join('')}</div></section>` : ''}
     ${gallery.length ? `<section class="ev-about"><h2 class="ev-h2">Imágenes</h2><div class="ev-gallery">${gallery.map((g, k) => `<button type="button" class="pg-item ph" data-evph="${k}" aria-label="Imagen ${k + 1}">${img(g, 600)}</button>`).join('')}</div></section>` : ''}
     ${herms.length ? `<section class="section"><h2 class="ev-h2">Hermandades en la calle</h2><div class="group">${herms.map(x => { const s = salida(x.h); return `<button type="button" class="cell tall" data-go="/hermandades/${x.id}"><span class="ph cell-thumb">${img(x.h.image, 120, { cls:'cell-thumb' })}</span><span class="cell-body"><span class="cell-row-wrap"><span style="flex:1;min-width:0"><span class="cell-title">${esc(x.name)}</span><span class="cell-sub" style="display:block">${esc(x.h.sede || titleCase(x.j))}</span></span>${s ? `<span class="cell-value tnum">${s}</span>` : ''}${icon('chevR', 18, 'cell-chev')}</span></span></button>`; }).join('')}</div><p class="section-foot">Horas de salida de 2026, orientativas hasta que se publique la guía de 2027.</p></section>` : ''}
 `;
