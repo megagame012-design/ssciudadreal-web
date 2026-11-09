@@ -2437,7 +2437,7 @@ const gPic = (g, w, pos) => g.image ? img(g.image, w, { pos: pos || g.imagePos |
 const gcard = g => `<button type="button" class="h-card" data-go="/hermandades/gloria/${g.id}">
     <span class="h-media ph">${gPic(g, 800)}</span>
     <span class="h-body">
-      <span class="h-name">${esc(g.nombre.replace(/^Hermandad (de la |del |de )?/, ''))}</span>
+      <span class="h-name">${esc(g.nombre)}</span>
       ${g.titulares ? `<span class="h-tit">${esc(g.titulares)}</span>` : ''}
       <span class="h-meta">${g.titulos && g.titulos[0] && g.titulos[0].fecha ? `<span>${icon('agenda', 14)} ${esc(g.titulos[0].fecha.split(',')[0])}</span>` : ''}${g.sede ? `<span>${icon('church', 14)} ${esc(g.sede.replace(/^Parroquia (de )?/, ''))}</span>` : ''}</span>
     </span></button>`;
@@ -2647,8 +2647,8 @@ function gloriaScreen(id){
   const g = gloriaById(id); if (!g) return null;
   const pics = [g.image && { u:g.image, c:g.imageCredit || '' }, ...(g.galeria || []).map(x => typeof x === 'string' ? { u:x, c:'' } : x)].filter(Boolean), photos = pics.map(x => x.u);
   const acts = gloriaActs(g);
-  const name = g.nombre.replace(/^Hermandad (de la |del |de )?/, '');
-  const tiles = [g.fundacion && { k:'Fundación', v:g.fundacion, big:true }, g.hermanos && { k:'Hermanos', v:g.hermanos, wide:true }, g.autoria && { k:'Autoría de la imagen', v:g.autoria, wide:true }].filter(Boolean)
+  const name = g.nombre;
+  const tiles = [g.fundacion && { k:'Fundación', v:g.fundacion, big:true }, g.coronacion && { k:'Coronación canónica', v:g.coronacion, wide:true }, g.hermanos && { k:'Hermanos', v:g.hermanos, wide:true }, g.autoria && { k:'Autoría de la imagen', v:g.autoria, wide:true }].filter(Boolean)
     .map(t => `<div class="hf-tile${t.wide ? ' wide' : ''}${t.big ? ' big' : ''}"><span class="hft-k">${t.k}</span><span class="hft-v${t.big ? ' tnum' : ''} selectable">${esc(t.v)}</span></div>`).join('');
   const row = (ic, k, v) => v ? `<div class="ifc-row">${icon(ic, 20)}<span><small>${k}</small><span class="selectable">${esc(v)}</span></span></div>` : '';
   const content = `
@@ -2682,7 +2682,7 @@ function gloriaScreen(id){
     ${photos.length > 1 ? `<section class="hf-sec herm-band"><h2 class="ev-h2">Fotos · ${photos.length}</h2><div class="cband cband-herm" role="group" aria-label="Fotos de la hermandad. Toca una para verla en grande"></div>
       <div class="hf-pad"><button type="button" class="btn btn-gray btn-wide" data-act="fotos">${icon('fototeca', 20)} Ver las ${photos.length} fotos</button></div></section>` : ''}
 `;
-  return screen({ title: g.nombre, navTitle: name, large:false, grouped:true, clearNav:true, content, setup: s => {
+  return screen({ title: g.nombre, navTitle: g.corto || name, large:false, grouped:true, clearNav:true, content, setup: s => {
     s.el.classList.add('has-stretch', 'hf-screen');
     const head = $('.hf-hero', s.el), pic = $('.hf-media img', s.el), nav = s.navbar;
     s.scroller.addEventListener('scroll', () => {

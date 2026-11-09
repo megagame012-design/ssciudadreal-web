@@ -89,35 +89,11 @@ const HERMANDADES_DATA = [
 /* Hermandades de gloria (no salen en Semana Santa). Fotos: «image» es la portada y «galeria» el resto;
    las de otros autores van como { u, c } con su crédito (las propias, sin crédito). */
 const GLORIA = [
-  { id:'carmen', nombre:'Hermandad del Carmen',
-    completo:'Hermandad y Cofradía de Ntra. Madre la Stma. Virgen del Carmen, Santa Teresa de Jesús y RR. MM. Carmelitas Descalzas',
-    titulares:'Virgen del Carmen, Santa Teresa de Jesús y Santísimo Cristo de la Luz',
-    sede:'Convento del Carmen (Carmelitas Descalzas)', image:'img/gloria/carmen/02.jpg', imagePos:'50% 30%',
-    galeria:['img/gloria/carmen/01.jpg', 'img/gloria/carmen/03.jpg', 'img/gloria/carmen/04.jpg', 'img/portada-cristo-rey.jpg', 'img/gloria/carmen/05.jpg', 'img/gloria/carmen/06.jpg', 'img/gloria/carmen/07.jpg', { u:'img/gloria/carmen/09.jpg', c:'Laura Arroyo · Objetivo Cofrade' }, { u:'img/gloria/carmen/08.jpg', c:'Lanza' }, 'img/santa-teresa.webp'],
-    resumen:'Su devoción está profundamente unida al Convento de las Madres Carmelitas Descalzas, en el barrio del Carmen. Venera a la Virgen del Carmen, a Santa Teresa de Jesús y al Santísimo Cristo de la Luz.',
-    titulos:[
-      { n:'Virgen del Carmen', fecha:'16 de julio', hora:'21:00 h', salida:'Convento del Carmen',
-        historia:'Es la gran devoción mariana del barrio del Carmen y de la ciudad. La imagen que presidía el altar mayor salía en procesión hasta 1962, cuando se incorporó una nueva talla para desfilar por las calles, que ha cumplido 25 años en su forma procesional actual.',
-        recorrido:'Convento del Carmen, Estación Vía Crucis, Paz, Rosa, Caballeros, Pasaje y Plaza de la Merced, Toledo, Feria, Prado y Azucena. Recogida hacia las 23:00 h.' },
-      { n:'Santa Teresa de Jesús', fecha:'15 de octubre', hora:'Por la tarde', salida:'Convento del Carmen',
-        historia:'La imagen de la santa abulense, fundadora de las Carmelitas Descalzas, procesionó por primera vez por las calles de Ciudad Real en 1952.',
-        recorrido:'Sale del Convento de las Carmelitas acompañada de fieles, autoridades y bandas de la ciudad.' },
-      { n:'Santísimo Cristo de la Luz',
-        historia:'Venerado desde tiempos inmemoriales dentro del propio convento. No tiene salida procesional propia: es un titular de culto interno que recibe a lo largo del año visitas, oraciones y ofrendas florales de devotos y colegios de la ciudad.' }
-    ] },
-  { id:'virgen-de-la-cabeza', nombre:'Hermandad de la Virgen de la Cabeza',
-    titulares:'Nuestra Señora de la Virgen de la Cabeza', sede:'Parroquia de Santo Tomás de Villanueva', image:'img/gloria/virgen-de-la-cabeza/01.jpg', imageCredit:'Lanza', imagePos:'44% 30%', galeria:[],
-    fundacion:'1995', autoria:'Miguel Gallego',
-    resumen:'La devoción a la Virgen de la Cabeza tiene siglos de arraigo en la provincia, con hermandades filiales muy antiguas como la de Valdepeñas. La cofradía de la capital es más reciente: su imagen, obra del escultor Miguel Gallego, llegó en febrero de 1995 y la hermandad salió por primera vez en procesión el 14 de mayo de ese mismo año.',
-    titulos:[
-      { n:'Virgen de la Cabeza', fecha:'Principios de junio o finales de mayo, según el calendario', hora:'19:00 h', salida:'Parroquia de Santo Tomás de Villanueva',
-        recorrido:'Recorre las calles más céntricas de la ciudad y regresa a su templo hacia las 22:00 h.' }
-    ] },
-  { id:'virgen-del-prado', nombre:'Hermandad de la Virgen del Prado',
+  { id:'virgen-del-prado', nombre:'Santa María del Prado Coronada', corto:'Virgen del Prado',
     completo:'Real e Ilustre Hermandad y Corte de Honor de Nuestra Señora la Virgen del Prado',
     titulares:'Nuestra Señora la Virgen del Prado, Patrona de Ciudad Real', sede:'Catedral de Ciudad Real', image:'img/gloria/virgen-del-prado/01.jpg', imagePos:'50% 30%',
-    galeria:['img/gloria/virgen-del-prado/02.jpg', 'img/gloria/virgen-del-prado/03.jpg', 'img/gloria/virgen-del-prado/04.jpg', 'img/gloria/virgen-del-prado/05.jpg'],
-    fundacion:'1600', hermanos:'Unos 800 alumbrando en agosto',
+    galeria:['img/gloria/virgen-del-prado/06.jpg', 'img/gloria/virgen-del-prado/02.jpg', 'img/gloria/virgen-del-prado/03.jpg', 'img/gloria/virgen-del-prado/04.jpg', 'img/gloria/virgen-del-prado/05.jpg'],
+    fundacion:'1600', coronacion:'28 de mayo de 1967', hermanos:'Unos 800 alumbrando en agosto',
     resumen:'La Virgen del Prado es la Patrona de Ciudad Real y la devoción mariana más multitudinaria de la capital. Desde 2023, la Hermandad y la Corte de Honor forman una sola corporación.',
     historia:[
       'Sus antecedentes se remontan al siglo XVI, cuando se la conocía como Cofradía de la Cera o de las Hachas. Se conserva una ratificación de sus ordenanzas del 25 de mayo de 1571, hecha por el Gobernador del Arzobispado de Toledo.',
@@ -133,6 +109,30 @@ const GLORIA = [
         historia:'Fiesta de Interés Turístico. La Virgen no procesiona, pero recibe en la Catedral una multitudinaria ofrenda de flores y frutos de peñas, asociaciones y vecinos vestidos con el traje regional.' },
       { n:'25 de mayo · San Urbano', fecha:'25 de mayo',
         historia:'Aniversario de la aparición de la imagen en 1088. Se renueva el solemne Voto de la Ciudad a su Patrona y termina el Novenario de mayo.' }
+    ] },
+  { id:'carmen', nombre:'Hermandad del Carmen',
+    completo:'Hermandad y Cofradía de Ntra. Madre la Stma. Virgen del Carmen, Santa Teresa de Jesús y RR. MM. Carmelitas Descalzas',
+    titulares:'Virgen del Carmen, Santa Teresa de Jesús y Santísimo Cristo de la Luz',
+    sede:'Convento del Carmen (Carmelitas Descalzas)', image:'img/gloria/carmen/02.jpg', imagePos:'50% 30%',
+    galeria:['img/gloria/carmen/01.jpg', 'img/gloria/carmen/03.jpg', 'img/gloria/carmen/04.jpg', 'img/portada-cristo-rey.jpg', 'img/gloria/carmen/05.jpg', 'img/gloria/carmen/06.jpg', { u:'img/gloria/carmen/09.jpg', c:'Laura Arroyo · Objetivo Cofrade' }, { u:'img/gloria/carmen/08.jpg', c:'Lanza' }, 'img/santa-teresa.webp'],
+    resumen:'Su devoción está profundamente unida al Convento de las Madres Carmelitas Descalzas, en el barrio del Carmen. Venera a la Virgen del Carmen, a Santa Teresa de Jesús y al Santísimo Cristo de la Luz.',
+    titulos:[
+      { n:'Virgen del Carmen', fecha:'16 de julio', hora:'21:00 h', salida:'Convento del Carmen',
+        historia:'Es la gran devoción mariana del barrio del Carmen y de la ciudad. La imagen que presidía el altar mayor salía en procesión hasta 1962, cuando se incorporó una nueva talla para desfilar por las calles, que ha cumplido 25 años en su forma procesional actual.',
+        recorrido:'Convento del Carmen, Estación Vía Crucis, Paz, Rosa, Caballeros, Pasaje y Plaza de la Merced, Toledo, Feria, Prado y Azucena. Recogida hacia las 23:00 h.' },
+      { n:'Santa Teresa de Jesús', fecha:'15 de octubre', hora:'Por la tarde', salida:'Convento del Carmen',
+        historia:'La imagen de la santa abulense, fundadora de las Carmelitas Descalzas, procesionó por primera vez por las calles de Ciudad Real en 1952.',
+        recorrido:'Sale del Convento de las Carmelitas acompañada de fieles, autoridades y bandas de la ciudad.' },
+      { n:'Santísimo Cristo de la Luz',
+        historia:'Venerado desde tiempos inmemoriales dentro del propio convento. No tiene salida procesional propia: es un titular de culto interno que recibe a lo largo del año visitas, oraciones y ofrendas florales de devotos y colegios de la ciudad.' }
+    ] },
+  { id:'virgen-de-la-cabeza', nombre:'Virgen de la Cabeza', completo:'Hermandad de la Virgen de la Cabeza',
+    titulares:'Nuestra Señora de la Virgen de la Cabeza', sede:'Parroquia de Santo Tomás de Villanueva', image:'img/gloria/virgen-de-la-cabeza/01.jpg', imageCredit:'Lanza', imagePos:'44% 30%', galeria:[],
+    fundacion:'1995', autoria:'Miguel Gallego',
+    resumen:'La devoción a la Virgen de la Cabeza tiene siglos de arraigo en la provincia, con hermandades filiales muy antiguas como la de Valdepeñas. La cofradía de la capital es más reciente: su imagen, obra del escultor Miguel Gallego, llegó en febrero de 1995 y la hermandad salió por primera vez en procesión el 14 de mayo de ese mismo año.',
+    titulos:[
+      { n:'Virgen de la Cabeza', fecha:'Principios de junio o finales de mayo, según el calendario', hora:'19:00 h', salida:'Parroquia de Santo Tomás de Villanueva',
+        recorrido:'Recorre las calles más céntricas de la ciudad y regresa a su templo hacia las 22:00 h.' }
     ] }
 ];
 
@@ -292,7 +292,7 @@ const ENSAYOS = [
       { t:'ensayo', f:'2027-02-27', h:'16:00', titulo:'Único ensayo' },
       { t:'traslado', f:'2027-03-14', h:'11:00', titulo:'Traslado del Señor' },
       { t:'muda', f:'2027-03-20', h:'11:00' } ] },
-  { id:'soledad', paso:'Nuestra Señora de la Soledad', herm:'Soledad', foto:'img/fototeca/2026-11-05-soledad-triduo/07.webp', foco:'50% 38%',   // 7.ª foto del álbum del triduo (la eligió el usuario)
+  { id:'soledad', paso:'Nuestra Señora de la Soledad', herm:'Soledad', foto:'img/ensayos-soledad.jpg', foco:'53% 52%', zoom:2.2,   // foto de Laura Arroyo (la eligió el usuario)
     notas:[], lema:'Por los costaleros de la vida',
     citas:[
       { t:'iguala', f:'2027-02-07', h:'10:30', l:GUARDAPASOS, titulo:'Igualá y ensayo' },
