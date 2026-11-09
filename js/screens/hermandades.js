@@ -250,7 +250,7 @@ function gloriaActs(g){
 }
 function gloriaScreen(id){
   const g = gloriaById(id); if (!g) return null;
-  const photos = [g.image, ...(g.galeria || [])].filter(Boolean);
+  const pics = [g.image && { u:g.image, c:g.imageCredit || '' }, ...(g.galeria || []).map(x => typeof x === 'string' ? { u:x, c:'' } : x)].filter(Boolean), photos = pics.map(x => x.u);
   const acts = gloriaActs(g);
   const name = g.nombre.replace(/^Hermandad (de la |del |de )?/, '');
   const tiles = [g.fundacion && { k:'Fundación', v:g.fundacion, big:true }, g.hermanos && { k:'Hermanos', v:g.hermanos, wide:true }, g.autoria && { k:'Autoría de la imagen', v:g.autoria, wide:true }].filter(Boolean)
@@ -296,7 +296,7 @@ function gloriaScreen(id){
       const solid = y > hH - 100; nav.classList.toggle('solid', solid); nav.classList.toggle('show-title', solid); nav.classList.toggle('over-photo', !solid);
     }, { passive:true });
     nav.classList.add('over-photo');
-    const items = photos.map(u => ({ url:u, credit:g.nombre }));
+    const items = pics.map(x => ({ url:x.u, credit:x.c || '' }));
     const band = $('.cband-herm', s.el); if (band) curvedBand(band, photos.map((src, k) => ({ src, name:'data-ph', val:k })), { speed:4, tileHeight:74, curve:68, fade:10 });
     s.el.addEventListener('click', e => {
       const p = e.target.closest('[data-ph]'); if (p) { openViewer(items, +p.dataset.ph, p); return; }

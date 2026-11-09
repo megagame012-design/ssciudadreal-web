@@ -1094,7 +1094,7 @@ function openViewer(items, index = 0, sourceEl = null){
       ${al.herm ? `<button type="button" class="btn btn-tinted btn-wide" data-go="/hermandades/${al.herm.id}">${icon('hermandades', 20)} Ver la hermandad</button>` : ''}` : `<h2 class="t-title3">${esc(it.herm ? it.herm.name : 'Foto')}</h2>
       ${it.herm ? `<p class="c2 t-subhead">${esc(it.herm.h.titulares || '')}</p>` : ''}
       <dl class="vw-meta">${it.herm ? `<div><dt>Jornada</dt><dd>${esc(titleCase(it.herm.j))}</dd></div><div><dt>Sede</dt><dd>${esc(it.herm.h.sede || '—')}</dd></div>` : ''}
-      <div><dt>Fecha</dt><dd class="c2">Sin fecha en los datos</dd></div><div><dt>Autoría</dt><dd>${esc(it.credit || 'Laura Arroyo · Objetivo Cofrade')}</dd></div></dl>
+      <div><dt>Fecha</dt><dd class="c2">Sin fecha en los datos</dd></div>${it.credit === '' ? '' : `<div><dt>Autoría</dt><dd>${esc(it.credit || 'Laura Arroyo · Objetivo Cofrade')}</dd></div>`}</dl>
       ${it.herm ? `<button type="button" class="btn btn-tinted btn-wide" data-go="/hermandades/${it.herm.id}">${icon('hermandades', 20)} Ver la hermandad</button>` : ''}`;
     apply();
   }
@@ -2645,7 +2645,7 @@ function gloriaActs(g){
 }
 function gloriaScreen(id){
   const g = gloriaById(id); if (!g) return null;
-  const photos = [g.image, ...(g.galeria || [])].filter(Boolean);
+  const pics = [g.image && { u:g.image, c:g.imageCredit || '' }, ...(g.galeria || []).map(x => typeof x === 'string' ? { u:x, c:'' } : x)].filter(Boolean), photos = pics.map(x => x.u);
   const acts = gloriaActs(g);
   const name = g.nombre.replace(/^Hermandad (de la |del |de )?/, '');
   const tiles = [g.fundacion && { k:'Fundación', v:g.fundacion, big:true }, g.hermanos && { k:'Hermanos', v:g.hermanos, wide:true }, g.autoria && { k:'Autoría de la imagen', v:g.autoria, wide:true }].filter(Boolean)
@@ -2691,7 +2691,7 @@ function gloriaScreen(id){
       const solid = y > hH - 100; nav.classList.toggle('solid', solid); nav.classList.toggle('show-title', solid); nav.classList.toggle('over-photo', !solid);
     }, { passive:true });
     nav.classList.add('over-photo');
-    const items = photos.map(u => ({ url:u, credit:g.nombre }));
+    const items = pics.map(x => ({ url:x.u, credit:x.c || '' }));
     const band = $('.cband-herm', s.el); if (band) curvedBand(band, photos.map((src, k) => ({ src, name:'data-ph', val:k })), { speed:4, tileHeight:74, curve:68, fade:10 });
     s.el.addEventListener('click', e => {
       const p = e.target.closest('[data-ph]'); if (p) { openViewer(items, +p.dataset.ph, p); return; }

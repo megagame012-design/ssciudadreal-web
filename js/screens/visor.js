@@ -66,7 +66,7 @@ export function openViewer(items, index = 0, sourceEl = null){
       ${al.herm ? `<button type="button" class="btn btn-tinted btn-wide" data-go="/hermandades/${al.herm.id}">${icon('hermandades', 20)} Ver la hermandad</button>` : ''}` : `<h2 class="t-title3">${esc(it.herm ? it.herm.name : 'Foto')}</h2>
       ${it.herm ? `<p class="c2 t-subhead">${esc(it.herm.h.titulares || '')}</p>` : ''}
       <dl class="vw-meta">${it.herm ? `<div><dt>Jornada</dt><dd>${esc(titleCase(it.herm.j))}</dd></div><div><dt>Sede</dt><dd>${esc(it.herm.h.sede || '—')}</dd></div>` : ''}
-      <div><dt>Fecha</dt><dd class="c2">Sin fecha en los datos</dd></div><div><dt>Autoría</dt><dd>${esc(it.credit || 'Laura Arroyo · Objetivo Cofrade')}</dd></div></dl>
+      <div><dt>Fecha</dt><dd class="c2">Sin fecha en los datos</dd></div>${it.credit === '' ? '' : `<div><dt>Autoría</dt><dd>${esc(it.credit || 'Laura Arroyo · Objetivo Cofrade')}</dd></div>`}</dl>
       ${it.herm ? `<button type="button" class="btn btn-tinted btn-wide" data-go="/hermandades/${it.herm.id}">${icon('hermandades', 20)} Ver la hermandad</button>` : ''}`;
     apply();
   }

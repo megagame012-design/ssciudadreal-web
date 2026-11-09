@@ -86,12 +86,14 @@ const HERMANDADES_DATA = [
 { jornada: "SÁBADO SANTO", items: [ { nombre: "Hermandad de Nuestra Señora Soledad y María Santísima de la Amargura", nombreCorto: "Hermandad de la Soledad y Amargura", titulares: "Soledad y Amargura", musica: "Coral Santísima Trinidad (Torralba de Cva) y A.M. Santa Cecilia (Calzada de Cva)", fundacion: "1565", autoria: "José Rivera y Luis Marco Pérez", hermanos: "400", portadores: "Amargura 40, Soledad 35", sede: "Parroquia San Pedro", distancia: "No especificado", puntosInteres: "No especificados", itinerarioHorarios: "Itinerario y horarios detallados en confirmación.", image: "https://res.cloudinary.com/dzonbpspb/image/upload/v1772806859/IMG_8892_hd4dew.jpg", galeria: ["https://res.cloudinary.com/dzonbpspb/image/upload/v1772806863/IMG_8890_toqaff.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772806860/IMG_8893_puje6w.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772806860/IMG_8889_zqskid.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772807039/IMG_9187_jj6c8n.jpg"] } ] },
 { jornada: "DOMINGO DE RESURRECCIÓN", items: [ { nombre: "Jesús Resucitado y María Santísima de la Alegría", titulares: "Jesús Resucitado y María Santísima de la Alegría", musica: "A.M. Santo Tomás de Villanueva (Ciudad Real) y Banda de Música Ciudad Real", autoria: "Manuel Martín Nieto y Méndez Lastrucci", portadores: "Resucitado 35, Alegría 30", sede: "Catedral", distancia: "No especificado", puntosInteres: "No especificados", itinerarioHorarios: "Itinerario y horarios detallados en confirmación.", image: "https://res.cloudinary.com/dzonbpspb/image/upload/v1772808229/IMG_9196_mmuk89.jpg", galeria: ["https://res.cloudinary.com/dzonbpspb/image/upload/v1772808229/IMG_9195_uwvszt.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772808274/IMG_9193_xkecpc.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772808237/IMG_9194_nmpqh8.jpg", "https://res.cloudinary.com/dzonbpspb/image/upload/v1772808230/IMG_9197_b6v146.jpg"] } ] }
 ];
-/* Hermandades de gloria (no salen en Semana Santa). Fotos: «image» es la portada y «galeria» el resto. */
+/* Hermandades de gloria (no salen en Semana Santa). Fotos: «image» es la portada y «galeria» el resto;
+   las de otros autores van como { u, c } con su crédito (las propias, sin crédito). */
 const GLORIA = [
   { id:'carmen', nombre:'Hermandad del Carmen',
     completo:'Hermandad y Cofradía de Ntra. Madre la Stma. Virgen del Carmen, Santa Teresa de Jesús y RR. MM. Carmelitas Descalzas',
     titulares:'Virgen del Carmen, Santa Teresa de Jesús y Santísimo Cristo de la Luz',
-    sede:'Convento del Carmen (Carmelitas Descalzas)', image:'img/portada-cristo-rey.jpg', imagePos:'45% 38%', galeria:['img/santa-teresa.webp'],
+    sede:'Convento del Carmen (Carmelitas Descalzas)', image:'img/gloria/carmen/02.jpg', imagePos:'50% 30%',
+    galeria:['img/gloria/carmen/01.jpg', 'img/gloria/carmen/03.jpg', 'img/gloria/carmen/04.jpg', 'img/portada-cristo-rey.jpg', 'img/gloria/carmen/05.jpg', 'img/gloria/carmen/06.jpg', 'img/gloria/carmen/07.jpg', { u:'img/gloria/carmen/09.jpg', c:'Laura Arroyo · Objetivo Cofrade' }, { u:'img/gloria/carmen/08.jpg', c:'Lanza' }, 'img/santa-teresa.webp'],
     resumen:'Su devoción está profundamente unida al Convento de las Madres Carmelitas Descalzas, en el barrio del Carmen. Venera a la Virgen del Carmen, a Santa Teresa de Jesús y al Santísimo Cristo de la Luz.',
     titulos:[
       { n:'Virgen del Carmen', fecha:'16 de julio', hora:'21:00 h', salida:'Convento del Carmen',
@@ -104,7 +106,7 @@ const GLORIA = [
         historia:'Venerado desde tiempos inmemoriales dentro del propio convento. No tiene salida procesional propia: es un titular de culto interno que recibe a lo largo del año visitas, oraciones y ofrendas florales de devotos y colegios de la ciudad.' }
     ] },
   { id:'virgen-de-la-cabeza', nombre:'Hermandad de la Virgen de la Cabeza',
-    titulares:'Nuestra Señora de la Virgen de la Cabeza', sede:'Parroquia de Santo Tomás de Villanueva', image:'', galeria:[],
+    titulares:'Nuestra Señora de la Virgen de la Cabeza', sede:'Parroquia de Santo Tomás de Villanueva', image:'img/gloria/virgen-de-la-cabeza/01.jpg', imageCredit:'Lanza', imagePos:'44% 30%', galeria:[],
     fundacion:'1995', autoria:'Miguel Gallego',
     resumen:'La devoción a la Virgen de la Cabeza tiene siglos de arraigo en la provincia, con hermandades filiales muy antiguas como la de Valdepeñas. La cofradía de la capital es más reciente: su imagen, obra del escultor Miguel Gallego, llegó en febrero de 1995 y la hermandad salió por primera vez en procesión el 14 de mayo de ese mismo año.',
     titulos:[
@@ -113,7 +115,8 @@ const GLORIA = [
     ] },
   { id:'virgen-del-prado', nombre:'Hermandad de la Virgen del Prado',
     completo:'Real e Ilustre Hermandad y Corte de Honor de Nuestra Señora la Virgen del Prado',
-    titulares:'Nuestra Señora la Virgen del Prado, Patrona de Ciudad Real', sede:'Catedral de Ciudad Real', image:'', galeria:[],
+    titulares:'Nuestra Señora la Virgen del Prado, Patrona de Ciudad Real', sede:'Catedral de Ciudad Real', image:'img/gloria/virgen-del-prado/01.jpg', imagePos:'50% 30%',
+    galeria:['img/gloria/virgen-del-prado/02.jpg', 'img/gloria/virgen-del-prado/03.jpg', 'img/gloria/virgen-del-prado/04.jpg', 'img/gloria/virgen-del-prado/05.jpg'],
     fundacion:'1600', hermanos:'Unos 800 alumbrando en agosto',
     resumen:'La Virgen del Prado es la Patrona de Ciudad Real y la devoción mariana más multitudinaria de la capital. Desde 2023, la Hermandad y la Corte de Honor forman una sola corporación.',
     historia:[
