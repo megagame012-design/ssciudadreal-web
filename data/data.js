@@ -324,7 +324,7 @@ const ENSAYOS = [
       { t:'ensayo', n:3, f:'2027-03-07', h:'09:30', l:'Pistas del Barrio de los Ángeles' },
       { t:'retranqueo', f:'2027-03-17', h:'20:30', l:'Parroquia Ntra. Sra. de los Ángeles', nota:'Pendiente de confirmación' },
       { t:'desarma', f:'2027-04-03', h:'11:00', l:'Parroquia Ntra. Sra. de los Ángeles', nota:'Pendiente de confirmación' } ] },
-  { id:'salud', paso:'Paso de Palio de María Santísima de la Salud', herm:'Cautivo', foto:'img/ensayos-salud.jpg', foco:'58% 50%', zoom:2,   // foto de Laura Arroyo (la eligió el usuario)
+  { id:'salud', paso:'María Santísima de la Salud', herm:'Cautivo', foto:'img/ensayos-salud.jpg', foco:'58% 50%', zoom:2,   // foto de Laura Arroyo (la eligió el usuario)
     notas:['Traer el calzado que se usará en la procesión, tanto a la igualá como a los ensayos'],
     citas:[
       { t:'iguala', f:'2027-01-22', h:'21:30', l:'Casa Hermandad', dir:'Residencial Ronda, 11', nota:'A partir de las 21:30 h' },
