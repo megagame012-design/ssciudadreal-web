@@ -160,7 +160,7 @@ register('/hoy', 'hoy', () => {
   const PORTADAS = [
     { desde:'2026-11-22', hasta:'2026-11-22', f:'img/portada-cristo-rey', alt:'Nazareno con la cruz al hombro, corona de espinas y potencias, ante un cuadro', pos:'44% 38%', listo:true },
     { desde:'2026-11-27', hasta:'2026-11-27', f:'img/portada-milagrosa', alt:'Virgen de la Medalla Milagrosa en un retablo cerámico', pos:'50% 22%', listo:true },
-    { desde:'2026-12-01', hasta:'2026-12-31', f:'img/portada-esperanza', alt:'Nuestra Señora de la Esperanza, con corona y ráfaga y tocado de encaje', pos:'50% 30%', listo:true }
+    { desde:'2026-12-01', hasta:'2026-12-31', f:'img/portada-diciembre', alt:'Nuestra Señora de la Esperanza en su altar de cultos, con corona de estrellas, manto verde y rosario entre las manos', pos:'50% 26%', listo:true }
   ];
   const por = PORTADAS.find(p => p.listo && TODAY >= p.desde && TODAY <= p.hasta) || { f:'img/portada', alt:'Dolorosa bajo palio, con corona y ráfaga, entre la candelería' };
 
